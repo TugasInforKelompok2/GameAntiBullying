@@ -149,7 +149,7 @@
             <h1 class="game-title text-3xl text-white drop-shadow-lg">🦸‍♀️ HERO KEBAIKAN 🦸‍♂️</h1>
             
             <!-- Player Stats -->
-            <div class="flex space-x-4">
+            <div class="flex space-x-4 items-center">
                 <div class="bg-white rounded-full px-4 py-2 shadow-lg">
                     <span class="text-sm font-bold text-purple-600">Level: </span>
                     <span id="playerLevel" class="text-lg font-bold text-green-600">1</span>
@@ -162,6 +162,12 @@
                     <span class="text-sm font-bold text-purple-600">⭐ </span>
                     <span id="empathyLevel" class="text-lg font-bold text-yellow-500">Pemula</span>
                 </div>
+                
+                <!-- Save Menu Button -->
+                <button id="saveMenuBtn" class="bg-white hover:bg-gray-100 text-purple-600 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                    <span class="text-lg">💾</span>
+                    <span class="text-sm ml-1">Save</span>
+                </button>
             </div>
         </div>
     </div>
@@ -278,10 +284,91 @@
                 </button>
             </div>
         </div>
+
+        <!-- Save Menu Panel -->
+        <div id="saveMenuPanel" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-8 shadow-2xl max-w-lg mx-4">
+                <div class="text-center mb-6">
+                    <div class="text-6xl mb-4">💾</div>
+                    <h3 class="text-3xl font-bold text-white mb-2">Menu Save Game</h3>
+                    <p class="text-white opacity-90">Kelola progress permainan kamu</p>
+                </div>
+
+                <!-- Save Info -->
+                <div id="saveInfo" class="bg-white rounded-2xl p-4 mb-6">
+                    <h4 class="font-bold text-purple-800 mb-3">📊 Info Progress</h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-600">Level:</span>
+                            <span id="saveInfoLevel" class="font-bold text-green-600 ml-2">1</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Poin:</span>
+                            <span id="saveInfoPoints" class="font-bold text-red-500 ml-2">0</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Waktu Main:</span>
+                            <span id="saveInfoTime" class="font-bold text-blue-600 ml-2">0m</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Terakhir Main:</span>
+                            <span id="saveInfoDate" class="font-bold text-purple-600 ml-2">Hari ini</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Actions -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <button id="manualSaveBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl mb-1">💾</div>
+                        <div class="text-sm">Save Manual</div>
+                    </button>
+                    
+                    <button id="exportSaveBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl mb-1">📤</div>
+                        <div class="text-sm">Export Save</div>
+                    </button>
+                    
+                    <button id="importSaveBtn" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl mb-1">📥</div>
+                        <div class="text-sm">Import Save</div>
+                    </button>
+                    
+                    <button id="resetGameBtn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                        <div class="text-2xl mb-1">🗑️</div>
+                        <div class="text-sm">Reset Game</div>
+                    </button>
+                </div>
+
+                <!-- Auto Save Status -->
+                <div class="bg-white bg-opacity-20 rounded-2xl p-4 mb-6">
+                    <div class="flex items-center justify-between text-white">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-2">🔄</span>
+                            <span class="font-bold">Auto Save</span>
+                        </div>
+                        <div class="text-sm opacity-90">Setiap 30 detik</div>
+                    </div>
+                    <div class="text-xs text-white opacity-75 mt-2">
+                        Progress otomatis tersimpan di browser kamu
+                    </div>
+                </div>
+
+                <!-- Hidden file input for import -->
+                <input type="file" id="importFileInput" accept=".json" class="hidden">
+
+                <!-- Close Button -->
+                <div class="text-center">
+                    <button id="closeSaveMenu" class="bg-white text-purple-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300">
+                        Tutup Menu 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Game State
+        // Game State with Save System
         let gameState = {
             playerLevel: 1,
             kindnessPoints: 0,
@@ -291,8 +378,165 @@
                 befriendNew: { progress: 0, target: 1, completed: false },
                 giveSupport: { progress: 0, target: 2, completed: false },
                 reportBully: { progress: 0, target: 1, completed: false }
-            }
+            },
+            achievements: [],
+            totalPlayTime: 0,
+            lastPlayed: null,
+            scenariosCompleted: 0
         };
+
+        // Save System Class
+        class SaveSystem {
+            constructor() {
+                this.saveKey = 'heroKebaikanSave';
+                this.autoSaveInterval = 30000; // Auto-save every 30 seconds
+                this.startAutoSave();
+            }
+
+            saveGame() {
+                try {
+                    const saveData = {
+                        ...gameState,
+                        lastPlayed: new Date().toISOString(),
+                        version: '1.0'
+                    };
+                    localStorage.setItem(this.saveKey, JSON.stringify(saveData));
+                    this.showSaveNotification();
+                    return true;
+                } catch (error) {
+                    console.error('Failed to save game:', error);
+                    return false;
+                }
+            }
+
+            loadGame() {
+                try {
+                    const savedData = localStorage.getItem(this.saveKey);
+                    if (savedData) {
+                        const parsedData = JSON.parse(savedData);
+                        
+                        // Merge saved data with current state
+                        Object.keys(parsedData).forEach(key => {
+                            if (key !== 'version') {
+                                gameState[key] = parsedData[key];
+                            }
+                        });
+                        
+                        this.showLoadNotification();
+                        return true;
+                    }
+                    return false;
+                } catch (error) {
+                    console.error('Failed to load game:', error);
+                    return false;
+                }
+            }
+
+            resetGame() {
+                if (confirm('🚨 Yakin ingin menghapus semua progress? Data tidak bisa dikembalikan!')) {
+                    localStorage.removeItem(this.saveKey);
+                    location.reload();
+                }
+            }
+
+            exportSave() {
+                try {
+                    const saveData = localStorage.getItem(this.saveKey);
+                    if (saveData) {
+                        const blob = new Blob([saveData], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `hero-kebaikan-save-${new Date().toISOString().split('T')[0]}.json`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                        
+                        this.showNotification('💾 Save file berhasil diunduh!', 'success');
+                    }
+                } catch (error) {
+                    this.showNotification('❌ Gagal mengunduh save file!', 'error');
+                }
+            }
+
+            importSave(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const saveData = JSON.parse(e.target.result);
+                        localStorage.setItem(this.saveKey, JSON.stringify(saveData));
+                        this.showNotification('✅ Save file berhasil dimuat! Refresh halaman.', 'success');
+                        setTimeout(() => location.reload(), 2000);
+                    } catch (error) {
+                        this.showNotification('❌ File save tidak valid!', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            startAutoSave() {
+                setInterval(() => {
+                    this.saveGame();
+                }, this.autoSaveInterval);
+            }
+
+            showSaveNotification() {
+                this.showNotification('💾 Progress tersimpan!', 'success');
+            }
+
+            showLoadNotification() {
+                this.showNotification('📂 Progress dimuat!', 'info');
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg text-white font-bold transform translate-x-full transition-transform duration-300 ${
+                    type === 'success' ? 'bg-green-500' : 
+                    type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+                }`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+
+            getPlayTime() {
+                const minutes = Math.floor(gameState.totalPlayTime / 60);
+                const hours = Math.floor(minutes / 60);
+                const remainingMinutes = minutes % 60;
+                
+                if (hours > 0) {
+                    return `${hours}j ${remainingMinutes}m`;
+                }
+                return `${minutes}m`;
+            }
+
+            getSaveInfo() {
+                const savedData = localStorage.getItem(this.saveKey);
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    return {
+                        lastPlayed: new Date(data.lastPlayed).toLocaleDateString('id-ID'),
+                        level: data.playerLevel,
+                        points: data.kindnessPoints,
+                        playTime: this.getPlayTime()
+                    };
+                }
+                return null;
+            }
+        }
+
+        // Initialize save system
+        const saveSystem = new SaveSystem();
 
         // Sound System using Web Audio API
         class SoundSystem {
@@ -470,6 +714,29 @@
             playerLevelEl.textContent = gameState.playerLevel;
             kindnessPointsEl.textContent = gameState.kindnessPoints;
             empathyLevelEl.textContent = gameState.empathyLevel;
+            updateSaveInfo();
+        }
+
+        function updateSaveInfo() {
+            document.getElementById('saveInfoLevel').textContent = gameState.playerLevel;
+            document.getElementById('saveInfoPoints').textContent = gameState.kindnessPoints;
+            document.getElementById('saveInfoTime').textContent = saveSystem.getPlayTime();
+            
+            const saveInfo = saveSystem.getSaveInfo();
+            if (saveInfo) {
+                document.getElementById('saveInfoDate').textContent = saveInfo.lastPlayed;
+            }
+        }
+
+        function showSaveMenu() {
+            updateSaveInfo();
+            document.getElementById('saveMenuPanel').classList.remove('hidden');
+            soundSystem.play('click');
+        }
+
+        function hideSaveMenu() {
+            document.getElementById('saveMenuPanel').classList.add('hidden');
+            soundSystem.play('click');
         }
 
         function showScenario(location, scenarioIndex = 0) {
@@ -591,6 +858,7 @@
             
             // Update game state
             gameState.kindnessPoints += points;
+            gameState.scenariosCompleted++;
             
             // Update mission progress
             updateMissionProgress(actionType);
@@ -602,6 +870,9 @@
             
             // Check for level up
             checkLevelUp();
+            
+            // Auto-save progress
+            saveSystem.saveGame();
             
             updateUI();
         }
@@ -801,6 +1072,38 @@
             updateUI();
         });
 
+        // Save System Event Listeners
+        document.getElementById('saveMenuBtn').addEventListener('click', showSaveMenu);
+        document.getElementById('closeSaveMenu').addEventListener('click', hideSaveMenu);
+        
+        document.getElementById('manualSaveBtn').addEventListener('click', () => {
+            soundSystem.play('success');
+            saveSystem.saveGame();
+            updateSaveInfo();
+        });
+        
+        document.getElementById('exportSaveBtn').addEventListener('click', () => {
+            soundSystem.play('click');
+            saveSystem.exportSave();
+        });
+        
+        document.getElementById('importSaveBtn').addEventListener('click', () => {
+            soundSystem.play('click');
+            document.getElementById('importFileInput').click();
+        });
+        
+        document.getElementById('importFileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                saveSystem.importSave(file);
+            }
+        });
+        
+        document.getElementById('resetGameBtn').addEventListener('click', () => {
+            soundSystem.play('error');
+            saveSystem.resetGame();
+        });
+
         // Add hover sounds to location buttons
         [schoolBtn, playgroundBtn, classroomBtn].forEach(btn => {
             btn.addEventListener('mouseenter', () => {
@@ -814,9 +1117,21 @@
             btn.classList.add('float');
         });
 
+        // Play Time Tracking
+        let playTimeStart = Date.now();
+        setInterval(() => {
+            gameState.totalPlayTime += 1; // Add 1 second
+        }, 1000);
+
+        // Load saved game on startup
+        if (saveSystem.loadGame()) {
+            updateUI();
+            updateMissionUI();
+        }
+
         // Initialize game
         updateUI();
         updateMissionUI();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a644e8c6ce8b16',t:'MTc1NDM5NjY0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a655c3c2d1a5e3',t:'MTc1NDM5NzMzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
