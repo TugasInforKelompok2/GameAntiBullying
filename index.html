@@ -155,6 +155,25 @@
         .location-transition.transitioning::before {
             left: 100%;
         }
+        
+        .mission-card {
+            transition: all 0.3s ease;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .mission-completed {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+        }
+        
+        .mission-locked {
+            opacity: 0.6;
+            filter: grayscale(50%);
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-purple-400 via-pink-300 to-blue-400 min-h-screen">
@@ -165,13 +184,18 @@
             <div class="flex flex-col space-y-3 md:hidden">
                 <div class="flex justify-between items-center">
                     <h1 class="game-title text-xl text-white drop-shadow-lg">🦸‍♀️ HERO KEBAIKAN</h1>
-                    <button id="saveMenuBtn" class="bg-white hover:bg-gray-100 text-purple-600 font-bold py-2 px-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
-                        <span class="text-base">💾</span>
-                    </button>
+                    <div class="flex space-x-2">
+                        <button id="infoBtn" class="bg-white hover:bg-gray-100 text-purple-600 font-bold py-2 px-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <span class="text-base">ℹ️</span>
+                        </button>
+                        <button id="saveMenuBtn" class="bg-white hover:bg-gray-100 text-purple-600 font-bold py-2 px-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <span class="text-base">💾</span>
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- Mobile Stats -->
-                <div class="grid grid-cols-3 gap-2">
+                <div class="grid grid-cols-2 gap-2 mb-2">
                     <div class="bg-white rounded-full px-2 py-1 shadow-lg text-center">
                         <span class="text-xs font-bold text-purple-600">Lv: </span>
                         <span id="playerLevel" class="text-sm font-bold text-green-600">1</span>
@@ -180,9 +204,15 @@
                         <span class="text-xs font-bold text-purple-600">💖 </span>
                         <span id="kindnessPoints" class="text-sm font-bold text-red-500">0</span>
                     </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
                     <div class="bg-white rounded-full px-2 py-1 shadow-lg text-center">
-                        <span class="text-xs font-bold text-purple-600">⭐ </span>
-                        <span id="empathyLevel" class="text-xs font-bold text-yellow-500">Pemula</span>
+                        <span class="text-xs font-bold text-purple-600">🧠 </span>
+                        <span id="intelligenceLevel" class="text-sm font-bold text-blue-600">1</span>
+                    </div>
+                    <div class="bg-white rounded-full px-2 py-1 shadow-lg text-center">
+                        <span class="text-xs font-bold text-purple-600">📊 </span>
+                        <span id="mathPoints" class="text-sm font-bold text-indigo-600">0</span>
                     </div>
                 </div>
             </div>
@@ -192,21 +222,29 @@
                 <h1 class="game-title text-2xl lg:text-3xl text-white drop-shadow-lg">🦸‍♀️ HERO KEBAIKAN 🦸‍♂️</h1>
                 
                 <!-- Desktop Stats -->
-                <div class="flex space-x-3 lg:space-x-4 items-center">
-                    <div class="bg-white rounded-full px-3 lg:px-4 py-2 shadow-lg">
-                        <span class="text-sm font-bold text-purple-600">Level: </span>
-                        <span id="playerLevelDesktop" class="text-lg font-bold text-green-600">1</span>
+                <div class="flex space-x-2 lg:space-x-3 items-center">
+                    <div class="bg-white rounded-full px-2 lg:px-3 py-2 shadow-lg">
+                        <span class="text-xs lg:text-sm font-bold text-purple-600">Lv: </span>
+                        <span id="playerLevelDesktop" class="text-sm lg:text-lg font-bold text-green-600">1</span>
                     </div>
-                    <div class="bg-white rounded-full px-3 lg:px-4 py-2 shadow-lg">
-                        <span class="text-sm font-bold text-purple-600">💖 </span>
-                        <span id="kindnessPointsDesktop" class="text-lg font-bold text-red-500">0</span>
+                    <div class="bg-white rounded-full px-2 lg:px-3 py-2 shadow-lg">
+                        <span class="text-xs lg:text-sm font-bold text-purple-600">💖 </span>
+                        <span id="kindnessPointsDesktop" class="text-sm lg:text-lg font-bold text-red-500">0</span>
                     </div>
-                    <div class="bg-white rounded-full px-3 lg:px-4 py-2 shadow-lg">
-                        <span class="text-sm font-bold text-purple-600">⭐ </span>
-                        <span id="empathyLevelDesktop" class="text-lg font-bold text-yellow-500">Pemula</span>
+                    <div class="bg-white rounded-full px-2 lg:px-3 py-2 shadow-lg">
+                        <span class="text-xs lg:text-sm font-bold text-purple-600">🧠 </span>
+                        <span id="intelligenceLevelDesktop" class="text-sm lg:text-lg font-bold text-blue-600">1</span>
+                    </div>
+                    <div class="bg-white rounded-full px-2 lg:px-3 py-2 shadow-lg">
+                        <span class="text-xs lg:text-sm font-bold text-purple-600">📊 </span>
+                        <span id="mathPointsDesktop" class="text-sm lg:text-lg font-bold text-indigo-600">0</span>
                     </div>
                     
-                    <!-- Save Menu Button -->
+                    <!-- Info and Save Menu Buttons -->
+                    <button id="infoBtnDesktop" class="bg-white hover:bg-gray-100 text-purple-600 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 mr-2">
+                        <span class="text-lg">ℹ️</span>
+                        <span class="text-sm ml-1">Info</span>
+                    </button>
                     <button id="saveMenuBtnDesktop" class="bg-white hover:bg-gray-100 text-purple-600 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
                         <span class="text-lg">💾</span>
                         <span class="text-sm ml-1">Save</span>
@@ -222,23 +260,29 @@
             <h2 class="text-xl md:text-2xl font-bold text-center text-purple-800 mb-4">🗺️ Peta Petualangan Kebaikan</h2>
             
             <!-- Location Buttons -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
                 <button id="schoolBtn" class="location-btn bg-red-400 hover:bg-red-500 text-white font-bold py-4 md:py-6 px-4 rounded-xl md:rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 active:scale-95">
                     <div class="text-3xl md:text-4xl mb-2">🏫</div>
                     <div class="text-base md:text-lg">Sekolah</div>
-                    <div class="text-xs opacity-80">3 Misi Tersedia</div>
+                    <div class="text-xs opacity-80">8 Misi Tersedia</div>
                 </button>
                 
                 <button id="playgroundBtn" class="location-btn bg-green-400 hover:bg-green-500 text-white font-bold py-4 md:py-6 px-4 rounded-xl md:rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 active:scale-95">
                     <div class="text-3xl md:text-4xl mb-2">🌳</div>
                     <div class="text-base md:text-lg">Taman</div>
-                    <div class="text-xs opacity-80">2 Misi Tersedia</div>
+                    <div class="text-xs opacity-80">6 Misi Tersedia</div>
                 </button>
                 
                 <button id="classroomBtn" class="location-btn bg-blue-400 hover:bg-blue-500 text-white font-bold py-4 md:py-6 px-4 rounded-xl md:rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 active:scale-95">
                     <div class="text-3xl md:text-4xl mb-2">📚</div>
                     <div class="text-base md:text-lg">Ruang Kelas</div>
-                    <div class="text-xs opacity-80">4 Misi Tersedia</div>
+                    <div class="text-xs opacity-80">7 Misi Tersedia</div>
+                </button>
+                
+                <button id="mathTutorBtn" class="location-btn bg-gradient-to-b from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-4 md:py-6 px-4 rounded-xl md:rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 active:scale-95">
+                    <div class="text-3xl md:text-4xl mb-2">🧮</div>
+                    <div class="text-base md:text-lg">Math Tutor</div>
+                    <div class="text-xs opacity-80">Bantu Teman Belajar</div>
                 </button>
             </div>
         </div>
@@ -279,38 +323,10 @@
 
         <!-- Mission Panel -->
         <div class="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-2xl md:rounded-3xl p-4 md:p-6 mt-4 md:mt-6 shadow-2xl">
-            <h3 class="text-lg md:text-2xl font-bold text-white text-center mb-4 md:mb-6">🎯 Misi Aktif</h3>
+            <h3 class="text-lg md:text-2xl font-bold text-white text-center mb-4 md:mb-6">🎯 Misi Hero Kebaikan</h3>
             
-            <div id="activeMissions" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                <div class="mission-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg">
-                    <div class="text-2xl md:text-3xl mb-2">🤝</div>
-                    <h4 class="font-bold text-purple-800 mb-2 text-sm md:text-base">Temani Teman Baru</h4>
-                    <p class="text-xs md:text-sm text-gray-600 mb-3">Ajak teman baru bermain bersama</p>
-                    <div class="bg-gray-200 rounded-full h-2 mb-2">
-                        <div class="bg-green-500 h-2 rounded-full w-0" id="mission1Progress"></div>
-                    </div>
-                    <div class="text-xs text-gray-500">Progress: 0/1</div>
-                </div>
-                
-                <div class="mission-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg">
-                    <div class="text-2xl md:text-3xl mb-2">💪</div>
-                    <h4 class="font-bold text-purple-800 mb-2 text-sm md:text-base">Beri Semangat</h4>
-                    <p class="text-xs md:text-sm text-gray-600 mb-3">Hibur teman yang sedang sedih</p>
-                    <div class="bg-gray-200 rounded-full h-2 mb-2">
-                        <div class="bg-blue-500 h-2 rounded-full w-0" id="mission2Progress"></div>
-                    </div>
-                    <div class="text-xs text-gray-500">Progress: 0/2</div>
-                </div>
-                
-                <div class="mission-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg sm:col-span-2 lg:col-span-1">
-                    <div class="text-2xl md:text-3xl mb-2">📢</div>
-                    <h4 class="font-bold text-purple-800 mb-2 text-sm md:text-base">Laporkan Pembully</h4>
-                    <p class="text-xs md:text-sm text-gray-600 mb-3">Beritahu guru tentang bullying</p>
-                    <div class="bg-gray-200 rounded-full h-2 mb-2">
-                        <div class="bg-red-500 h-2 rounded-full w-0" id="mission3Progress"></div>
-                    </div>
-                    <div class="text-xs text-gray-500">Progress: 0/1</div>
-                </div>
+            <div id="activeMissions" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
+                <!-- Missions will be dynamically generated -->
             </div>
         </div>
 
@@ -326,6 +342,96 @@
                 <button id="closeLevelUp" class="bg-white text-orange-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300">
                     Lanjutkan Petualangan! 🚀
                 </button>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div id="infoPanel" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl max-w-lg w-full max-h-screen overflow-y-auto">
+                <div class="text-center mb-4 md:mb-6">
+                    <div class="text-4xl md:text-6xl mb-2 md:mb-4">ℹ️</div>
+                    <h3 class="text-xl md:text-3xl font-bold text-white mb-2">Informasi Game</h3>
+                    <p class="text-sm md:text-base text-white opacity-90">Hero Kebaikan - Petualangan Anti-Bullying</p>
+                </div>
+
+                <!-- Game Info -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 mb-4 md:mb-6">
+                    <h4 class="font-bold text-purple-800 mb-3 text-sm md:text-base">🎮 Tentang Game</h4>
+                    <div class="text-xs md:text-sm text-gray-700 space-y-2">
+                        <p>Game edukasi interaktif yang mengajarkan nilai-nilai kebaikan dan empati untuk melawan bullying.</p>
+                        <p>Pemain berperan sebagai Hero Kebaikan yang membantu teman-teman dalam berbagai situasi di sekolah.</p>
+                    </div>
+                </div>
+
+                <!-- Developer Info -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 mb-4 md:mb-6">
+                    <h4 class="font-bold text-purple-800 mb-3 text-sm md:text-base">👥 Tim Pengembang</h4>
+                    <div class="text-center mb-4">
+                        <div class="text-2xl md:text-3xl font-bold text-purple-600 mb-2">Kelas 9B Kelompok 2</div>
+                        <div class="text-xs md:text-sm text-gray-600">Proyek Game Edukasi Anti-Bullying</div>
+                        <div class="text-xs text-gray-500 mt-1">SMPN 20 Surakarta</div>
+                    </div>
+                    
+                    <!-- Member Table -->
+                    <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3">
+                        <h5 class="font-bold text-purple-700 mb-2 text-xs md:text-sm text-center">🌟 Anggota Kelompok</h5>
+                        <div class="grid grid-cols-2 gap-2 text-xs md:text-sm">
+                            <div class="bg-white rounded-lg p-2 text-center shadow-sm">
+                                <div class="text-purple-600 font-bold">👨‍💻 Keanu</div>
+                            </div>
+                            <div class="bg-white rounded-lg p-2 text-center shadow-sm">
+                                <div class="text-purple-600 font-bold">👨‍💻 Rafa</div>
+                            </div>
+                            <div class="bg-white rounded-lg p-2 text-center shadow-sm">
+                                <div class="text-purple-600 font-bold">👩‍💻 Salsabila</div>
+                            </div>
+                            <div class="bg-white rounded-lg p-2 text-center shadow-sm">
+                                <div class="text-purple-600 font-bold">👩‍💻 Nadinda</div>
+                            </div>
+                            <div class="bg-white rounded-lg p-2 text-center shadow-sm">
+                                <div class="text-purple-600 font-bold">👩‍💻 Aura</div>
+                            </div>
+                            <div class="bg-white rounded-lg p-2 text-center shadow-sm">
+                                <div class="text-purple-600 font-bold">👩‍💻 Nabila</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Features -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 mb-4 md:mb-6">
+                    <h4 class="font-bold text-purple-800 mb-3 text-sm md:text-base">✨ Fitur Game</h4>
+                    <div class="text-xs md:text-sm text-gray-700 space-y-1">
+                        <div>• 🎯 Sistem misi yang dinamis dan otomatis</div>
+                        <div>• 🏫 3 lokasi petualangan (Sekolah, Taman, Ruang Kelas)</div>
+                        <div>• 🧮 Mode Tutor Matematika SMP interaktif</div>
+                        <div>• 🧠 Sistem level kepintaran dan poin matematika</div>
+                        <div>• 📈 Dual progress tracking (Kebaikan & Matematika)</div>
+                        <div>• 💾 Auto-save dan manual save system</div>
+                        <div>• 🎵 Sound effects dan animasi interaktif</div>
+                        <div>• 📱 Responsive design untuk semua device</div>
+                    </div>
+                </div>
+
+                <!-- Math Features -->
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl md:rounded-2xl p-3 md:p-4 mb-4 md:mb-6">
+                    <h4 class="font-bold text-blue-800 mb-3 text-sm md:text-base">🧮 Fitur Matematika</h4>
+                    <div class="text-xs md:text-sm text-blue-700 space-y-1">
+                        <div>• 📚 Soal matematika tingkat SMP</div>
+                        <div>• 🔢 4 kategori: Dasar, Aljabar, Geometri, Lanjutan</div>
+                        <div>• 📊 Sistem level kepintaran 1-8</div>
+                        <div>• 💡 Penjelasan detail setiap jawaban</div>
+                        <div>• 🏆 Misi khusus tutor matematika</div>
+                        <div>• 🎓 Title kepintaran yang berkembang</div>
+                    </div>
+                </div>
+
+                <!-- Close Button -->
+                <div class="text-center">
+                    <button id="closeInfoPanel" class="bg-white text-purple-600 font-bold py-2 md:py-3 px-6 md:px-8 rounded-full shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 active:scale-95 text-sm md:text-base">
+                        Tutup Info 🚀
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -412,28 +518,679 @@
     </div>
 
     <script>
-        // Game State with Save System
+        // Game State with Expanded Mission System
         let gameState = {
             playerLevel: 1,
             kindnessPoints: 0,
             empathyLevel: 'Pemula',
+            intelligenceLevel: 1,
+            mathPoints: 0,
+            intelligenceTitle: 'Pemula Matematika',
             currentLocation: null,
+            mathMode: false,
             missions: {
-                befriendNew: { progress: 0, target: 1, completed: false },
-                giveSupport: { progress: 0, target: 2, completed: false },
-                reportBully: { progress: 0, target: 1, completed: false }
+                // Basic Missions (Level 1)
+                befriendNew: { 
+                    name: "Temani Teman Baru", 
+                    description: "Ajak teman baru bermain bersama", 
+                    emoji: "🤝", 
+                    progress: 0, 
+                    target: 3, 
+                    completed: false, 
+                    unlockLevel: 1,
+                    reward: 50,
+                    category: "friendship"
+                },
+                giveSupport: { 
+                    name: "Beri Semangat", 
+                    description: "Hibur teman yang sedang sedih", 
+                    emoji: "💪", 
+                    progress: 0, 
+                    target: 5, 
+                    completed: false, 
+                    unlockLevel: 1,
+                    reward: 75,
+                    category: "support"
+                },
+                reportBully: { 
+                    name: "Laporkan Pembully", 
+                    description: "Beritahu guru tentang bullying", 
+                    emoji: "📢", 
+                    progress: 0, 
+                    target: 2, 
+                    completed: false, 
+                    unlockLevel: 1,
+                    reward: 100,
+                    category: "protection"
+                },
+                
+                // Intermediate Missions (Level 2-3)
+                shareFood: { 
+                    name: "Berbagi Makanan", 
+                    description: "Bagi bekal dengan teman yang lupa", 
+                    emoji: "🍎", 
+                    progress: 0, 
+                    target: 4, 
+                    completed: false, 
+                    unlockLevel: 2,
+                    reward: 60,
+                    category: "sharing"
+                },
+                helpStudy: { 
+                    name: "Bantu Belajar", 
+                    description: "Ajari teman yang kesulitan pelajaran", 
+                    emoji: "📖", 
+                    progress: 0, 
+                    target: 6, 
+                    completed: false, 
+                    unlockLevel: 2,
+                    reward: 80,
+                    category: "education"
+                },
+                includeOthers: { 
+                    name: "Ajak Bermain", 
+                    description: "Ajak teman yang sendirian ikut bermain", 
+                    emoji: "🎮", 
+                    progress: 0, 
+                    target: 5, 
+                    completed: false, 
+                    unlockLevel: 2,
+                    reward: 70,
+                    category: "inclusion"
+                },
+                mediateConflict: { 
+                    name: "Damaikan Teman", 
+                    description: "Bantu menyelesaikan pertengkaran", 
+                    emoji: "🕊️", 
+                    progress: 0, 
+                    target: 3, 
+                    completed: false, 
+                    unlockLevel: 3,
+                    reward: 90,
+                    category: "peacemaking"
+                },
+                
+                // Advanced Missions (Level 4-5)
+                organizeActivity: { 
+                    name: "Organisir Kegiatan", 
+                    description: "Buat kegiatan seru untuk semua", 
+                    emoji: "🎪", 
+                    progress: 0, 
+                    target: 3, 
+                    completed: false, 
+                    unlockLevel: 4,
+                    reward: 120,
+                    category: "leadership"
+                },
+                mentorJunior: { 
+                    name: "Mentor Adik Kelas", 
+                    description: "Bimbing adik kelas yang baru", 
+                    emoji: "👨‍🏫", 
+                    progress: 0, 
+                    target: 4, 
+                    completed: false, 
+                    unlockLevel: 4,
+                    reward: 110,
+                    category: "mentoring"
+                },
+                createClub: { 
+                    name: "Buat Klub Kebaikan", 
+                    description: "Bentuk grup untuk menyebarkan kebaikan", 
+                    emoji: "🌟", 
+                    progress: 0, 
+                    target: 2, 
+                    completed: false, 
+                    unlockLevel: 5,
+                    reward: 150,
+                    category: "community"
+                },
+                
+                // Expert Missions (Level 6+)
+                antibullyingCampaign: { 
+                    name: "Kampanye Anti-Bullying", 
+                    description: "Buat kampanye melawan bullying", 
+                    emoji: "📣", 
+                    progress: 0, 
+                    target: 3, 
+                    completed: false, 
+                    unlockLevel: 6,
+                    reward: 200,
+                    category: "advocacy"
+                },
+                peerCounselor: { 
+                    name: "Konselor Sebaya", 
+                    description: "Jadi tempat curhat teman-teman", 
+                    emoji: "🤗", 
+                    progress: 0, 
+                    target: 8, 
+                    completed: false, 
+                    unlockLevel: 6,
+                    reward: 180,
+                    category: "counseling"
+                },
+                kindnessAmbassador: { 
+                    name: "Duta Kebaikan", 
+                    description: "Jadi contoh kebaikan untuk semua", 
+                    emoji: "👑", 
+                    progress: 0, 
+                    target: 10, 
+                    completed: false, 
+                    unlockLevel: 7,
+                    reward: 250,
+                    category: "ambassador"
+                },
+                
+                // Special Challenge Missions
+                weeklyChallenge: { 
+                    name: "Tantangan Mingguan", 
+                    description: "Lakukan 1 kebaikan setiap hari", 
+                    emoji: "🗓️", 
+                    progress: 0, 
+                    target: 7, 
+                    completed: false, 
+                    unlockLevel: 3,
+                    reward: 300,
+                    category: "challenge"
+                },
+                empathyMaster: { 
+                    name: "Master Empati", 
+                    description: "Pahami perasaan 15 orang berbeda", 
+                    emoji: "💝", 
+                    progress: 0, 
+                    target: 15, 
+                    completed: false, 
+                    unlockLevel: 5,
+                    reward: 400,
+                    category: "empathy"
+                },
+                
+                // Math Tutoring Missions
+                mathTutor: { 
+                    name: "Tutor Matematika", 
+                    description: "Ajari teman matematika dasar", 
+                    emoji: "🧮", 
+                    progress: 0, 
+                    target: 5, 
+                    completed: false, 
+                    unlockLevel: 1,
+                    reward: 80,
+                    category: "education"
+                },
+                algebraHelper: { 
+                    name: "Pembantu Aljabar", 
+                    description: "Bantu teman memahami aljabar", 
+                    emoji: "📐", 
+                    progress: 0, 
+                    target: 4, 
+                    completed: false, 
+                    unlockLevel: 2,
+                    reward: 100,
+                    category: "education"
+                },
+                geometryGuide: { 
+                    name: "Panduan Geometri", 
+                    description: "Ajarkan konsep geometri", 
+                    emoji: "📏", 
+                    progress: 0, 
+                    target: 3, 
+                    completed: false, 
+                    unlockLevel: 3,
+                    reward: 120,
+                    category: "education"
+                },
+                mathMentor: { 
+                    name: "Mentor Matematika", 
+                    description: "Jadi mentor matematika terpercaya", 
+                    emoji: "🎓", 
+                    progress: 0, 
+                    target: 8, 
+                    completed: false, 
+                    unlockLevel: 4,
+                    reward: 150,
+                    category: "education"
+                },
+                mathChampion: { 
+                    name: "Juara Matematika", 
+                    description: "Bantu 10 teman sukses matematika", 
+                    emoji: "🏆", 
+                    progress: 0, 
+                    target: 10, 
+                    completed: false, 
+                    unlockLevel: 5,
+                    reward: 200,
+                    category: "education"
+                }
             },
             achievements: [],
             totalPlayTime: 0,
             lastPlayed: null,
-            scenariosCompleted: 0
+            scenariosCompleted: 0,
+            dailyStreak: 0,
+            lastPlayDate: null
         };
 
-        // Save System Class
+        // Math Problems Database for SMP Level
+        const mathProblems = {
+            basic: [
+                {
+                    question: "Berapakah hasil dari 15 + 28?",
+                    options: ["43", "42", "44", "41"],
+                    correct: 0,
+                    explanation: "15 + 28 = 43. Kita bisa menghitung dengan cara: 15 + 20 = 35, lalu 35 + 8 = 43."
+                },
+                {
+                    question: "Hasil dari 84 - 37 adalah...",
+                    options: ["47", "46", "48", "49"],
+                    correct: 0,
+                    explanation: "84 - 37 = 47. Cara mudah: 84 - 30 = 54, lalu 54 - 7 = 47."
+                },
+                {
+                    question: "Berapakah 12 × 8?",
+                    options: ["96", "94", "98", "92"],
+                    correct: 0,
+                    explanation: "12 × 8 = 96. Bisa dihitung: 12 × 8 = (10 × 8) + (2 × 8) = 80 + 16 = 96."
+                }
+            ],
+            algebra: [
+                {
+                    question: "Jika x + 5 = 12, maka nilai x adalah...",
+                    options: ["7", "6", "8", "5"],
+                    correct: 0,
+                    explanation: "x + 5 = 12, maka x = 12 - 5 = 7. Kita pindahkan 5 ke ruas kanan."
+                },
+                {
+                    question: "Hasil dari 3x + 2x adalah...",
+                    options: ["5x", "6x", "5x²", "6"],
+                    correct: 0,
+                    explanation: "3x + 2x = (3 + 2)x = 5x. Kita jumlahkan koefisiennya."
+                },
+                {
+                    question: "Jika 2y - 3 = 9, maka y = ...",
+                    options: ["6", "5", "7", "4"],
+                    correct: 0,
+                    explanation: "2y - 3 = 9, maka 2y = 9 + 3 = 12, jadi y = 12 ÷ 2 = 6."
+                }
+            ],
+            geometry: [
+                {
+                    question: "Luas persegi dengan sisi 8 cm adalah...",
+                    options: ["64 cm²", "32 cm²", "16 cm²", "24 cm²"],
+                    correct: 0,
+                    explanation: "Luas persegi = sisi × sisi = 8 × 8 = 64 cm²."
+                },
+                {
+                    question: "Keliling lingkaran dengan jari-jari 7 cm adalah... (π = 22/7)",
+                    options: ["44 cm", "22 cm", "88 cm", "14 cm"],
+                    correct: 0,
+                    explanation: "Keliling = 2πr = 2 × (22/7) × 7 = 2 × 22 = 44 cm."
+                },
+                {
+                    question: "Luas segitiga dengan alas 10 cm dan tinggi 6 cm adalah...",
+                    options: ["30 cm²", "60 cm²", "16 cm²", "20 cm²"],
+                    correct: 0,
+                    explanation: "Luas segitiga = ½ × alas × tinggi = ½ × 10 × 6 = 30 cm²."
+                }
+            ],
+            advanced: [
+                {
+                    question: "Jika a² + b² = 25 dan a = 3, maka b = ...",
+                    options: ["4", "5", "3", "6"],
+                    correct: 0,
+                    explanation: "a² + b² = 25, jika a = 3, maka 9 + b² = 25, sehingga b² = 16, jadi b = 4."
+                },
+                {
+                    question: "Hasil dari (x + 3)(x - 2) adalah...",
+                    options: ["x² + x - 6", "x² - x - 6", "x² + x + 6", "x² - x + 6"],
+                    correct: 0,
+                    explanation: "(x + 3)(x - 2) = x² - 2x + 3x - 6 = x² + x - 6."
+                },
+                {
+                    question: "Jika f(x) = 2x + 1, maka f(5) = ...",
+                    options: ["11", "10", "12", "9"],
+                    correct: 0,
+                    explanation: "f(5) = 2(5) + 1 = 10 + 1 = 11."
+                }
+            ]
+        };
+
+        // Expanded Game Scenarios
+        const scenarios = {
+            school: [
+                {
+                    title: "Teman Baru di Koridor",
+                    description: "Kamu melihat anak baru berdiri sendiri di koridor. Dia terlihat bingung dan kesepian.",
+                    characters: [
+                        { emoji: "😟", name: "Anak Baru", dialogue: "Aku tidak tahu harus ke mana..." },
+                        { emoji: "😊", name: "KAMU", dialogue: "Apa yang harus kulakukan?" }
+                    ],
+                    actions: [
+                        { text: "Ajak Bicara", type: "befriend", points: 15, correct: true },
+                        { text: "Tunjukkan Jalan", type: "help", points: 10, correct: true },
+                        { text: "Abaikan", type: "ignore", points: -5, correct: false },
+                        { text: "Panggil Teman Lain", type: "social", points: 20, correct: true }
+                    ]
+                },
+                {
+                    title: "Bullying di Kantin",
+                    description: "Seorang anak besar mengambil bekal temanmu dan tidak mau mengembalikannya.",
+                    characters: [
+                        { emoji: "😡", name: "Pembully", dialogue: "Bekalmu jelek! Aku ambil saja!" },
+                        { emoji: "😢", name: "Korban", dialogue: "Kembalikan bekalku..." },
+                        { emoji: "😠", name: "KAMU", dialogue: "Ini tidak boleh dibiarkan!" }
+                    ],
+                    actions: [
+                        { text: "Laporkan ke Guru", type: "report", points: 25, correct: true },
+                        { text: "Bela Teman", type: "defend", points: 20, correct: true },
+                        { text: "Ajak Pergi", type: "escape", points: 10, correct: false },
+                        { text: "Diam Saja", type: "ignore", points: -10, correct: false }
+                    ]
+                },
+                {
+                    title: "Teman Lupa Bekal",
+                    description: "Temanmu lupa membawa bekal dan terlihat lapar saat jam istirahat.",
+                    characters: [
+                        { emoji: "😋", name: "Teman Lapar", dialogue: "Aduh, aku lupa bawa bekal..." },
+                        { emoji: "🤔", name: "KAMU", dialogue: "Kasihan dia..." }
+                    ],
+                    actions: [
+                        { text: "Bagi Bekalmu", type: "share", points: 20, correct: true },
+                        { text: "Ajak ke Kantin", type: "help", points: 15, correct: true },
+                        { text: "Pura-pura Tidak Lihat", type: "ignore", points: -5, correct: false },
+                        { text: "Kumpulkan Uang Bareng", type: "organize", points: 25, correct: true }
+                    ]
+                },
+                {
+                    title: "Gosip Jahat",
+                    description: "Kamu mendengar teman-teman membicarakan hal buruk tentang seseorang.",
+                    characters: [
+                        { emoji: "🗣️", name: "Teman A", dialogue: "Dia aneh banget sih..." },
+                        { emoji: "😏", name: "Teman B", dialogue: "Iya, jangan deket-deket deh!" },
+                        { emoji: "😐", name: "KAMU", dialogue: "Ini tidak benar..." }
+                    ],
+                    actions: [
+                        { text: "Hentikan Gosip", type: "defend", points: 30, correct: true },
+                        { text: "Alihkan Pembicaraan", type: "mediate", points: 20, correct: true },
+                        { text: "Ikut Bergosip", type: "join", points: -15, correct: false },
+                        { text: "Pergi Menjauh", type: "escape", points: 5, correct: false }
+                    ]
+                },
+                {
+                    title: "Teman Dijauhi",
+                    description: "Seorang teman dijauhi oleh grup karena berbeda pendapat.",
+                    characters: [
+                        { emoji: "😔", name: "Teman Terisolasi", dialogue: "Kenapa mereka menghindariku..." },
+                        { emoji: "😤", name: "Grup", dialogue: "Dia selalu beda pendapat!" },
+                        { emoji: "🤝", name: "KAMU", dialogue: "Semua orang berhak punya pendapat." }
+                    ],
+                    actions: [
+                        { text: "Temani Dia", type: "befriend", points: 25, correct: true },
+                        { text: "Mediasi Konflik", type: "mediate", points: 35, correct: true },
+                        { text: "Ikut Menjauhi", type: "join", points: -20, correct: false },
+                        { text: "Buat Grup Baru", type: "organize", points: 30, correct: true }
+                    ]
+                },
+                {
+                    title: "Cyberbullying",
+                    description: "Temanmu menunjukkan chat grup yang berisi ejekan tentang dirinya.",
+                    characters: [
+                        { emoji: "😭", name: "Korban", dialogue: "Mereka bilang aku jelek di grup..." },
+                        { emoji: "📱", name: "Chat Jahat", dialogue: "Pesan-pesan menyakitkan..." },
+                        { emoji: "😡", name: "KAMU", dialogue: "Ini bullying digital!" }
+                    ],
+                    actions: [
+                        { text: "Screenshot & Lapor", type: "report", points: 40, correct: true },
+                        { text: "Hibur & Dukung", type: "comfort", points: 25, correct: true },
+                        { text: "Balas Chat Jahat", type: "fight", points: -10, correct: false },
+                        { text: "Blokir Semua", type: "escape", points: 10, correct: false }
+                    ]
+                },
+                {
+                    title: "Diskriminasi",
+                    description: "Teman dari latar belakang berbeda tidak diajak bermain oleh yang lain.",
+                    characters: [
+                        { emoji: "😞", name: "Teman Berbeda", dialogue: "Mereka tidak mau main sama aku..." },
+                        { emoji: "🙄", name: "Grup Eksklusif", dialogue: "Kita kan beda sama dia..." },
+                        { emoji: "🌈", name: "KAMU", dialogue: "Perbedaan itu indah!" }
+                    ],
+                    actions: [
+                        { text: "Ajak Main Bersama", type: "include", points: 30, correct: true },
+                        { text: "Edukasi Tentang Toleransi", type: "teach", points: 35, correct: true },
+                        { text: "Ikut Mengucilkan", type: "join", points: -25, correct: false },
+                        { text: "Buat Aktivitas Inklusif", type: "organize", points: 40, correct: true }
+                    ]
+                },
+                {
+                    title: "Teman Insecure",
+                    description: "Temanmu selalu merasa tidak percaya diri dan membandingkan diri dengan orang lain.",
+                    characters: [
+                        { emoji: "😰", name: "Teman Insecure", dialogue: "Aku tidak sepintar mereka..." },
+                        { emoji: "💪", name: "KAMU", dialogue: "Setiap orang punya kelebihan!" }
+                    ],
+                    actions: [
+                        { text: "Puji Kelebihannya", type: "encourage", points: 20, correct: true },
+                        { text: "Ajak Aktivitas Seru", type: "include", points: 25, correct: true },
+                        { text: "Setuju Dia Kurang", type: "agree", points: -15, correct: false },
+                        { text: "Bantu Temukan Bakat", type: "mentor", points: 30, correct: true }
+                    ]
+                },
+                {
+                    title: "Teman Kesulitan Matematika",
+                    description: "Temanmu sangat kesulitan dengan pelajaran matematika dan akan ada ulangan besok.",
+                    characters: [
+                        { emoji: "😫", name: "Teman Bingung", dialogue: "Aku tidak mengerti matematika sama sekali!" },
+                        { emoji: "📚", name: "Buku Matematika", dialogue: "Soal-soal yang rumit..." },
+                        { emoji: "🤓", name: "KAMU", dialogue: "Aku bisa mengajarimu!" }
+                    ],
+                    actions: [
+                        { text: "Ajari Step by Step", type: "mathTutor", points: 30, correct: true },
+                        { text: "Beri Contekan", type: "cheat", points: -20, correct: false },
+                        { text: "Suruh Belajar Sendiri", type: "ignore", points: -10, correct: false },
+                        { text: "Panggil Guru", type: "help", points: 15, correct: true }
+                    ]
+                }
+            ],
+            playground: [
+                {
+                    title: "Teman Terjatuh",
+                    description: "Temanmu terjatuh saat bermain dan lututnya berdarah. Dia menangis kesakitan.",
+                    characters: [
+                        { emoji: "😭", name: "Teman", dialogue: "Aduh... sakit sekali!" },
+                        { emoji: "😟", name: "KAMU", dialogue: "Aku harus membantu!" }
+                    ],
+                    actions: [
+                        { text: "Panggil Guru", type: "help", points: 20, correct: true },
+                        { text: "Hibur Dia", type: "comfort", points: 15, correct: true },
+                        { text: "Cari Obat", type: "medical", points: 25, correct: true },
+                        { text: "Tinggalkan", type: "ignore", points: -15, correct: false }
+                    ]
+                },
+                {
+                    title: "Permainan Tidak Adil",
+                    description: "Dalam permainan, ada yang curang dan tidak mau mengakuinya.",
+                    characters: [
+                        { emoji: "😤", name: "Penipu", dialogue: "Aku tidak curang!" },
+                        { emoji: "😠", name: "Korban", dialogue: "Dia jelas curang tadi!" },
+                        { emoji: "⚖️", name: "KAMU", dialogue: "Harus adil untuk semua." }
+                    ],
+                    actions: [
+                        { text: "Jadi Wasit", type: "mediate", points: 25, correct: true },
+                        { text: "Buat Aturan Baru", type: "organize", points: 30, correct: true },
+                        { text: "Ikut Curang", type: "cheat", points: -20, correct: false },
+                        { text: "Berhenti Main", type: "quit", points: 5, correct: false }
+                    ]
+                },
+                {
+                    title: "Anak Kecil Menangis",
+                    description: "Adik kelas menangis karena mainannya diambil anak yang lebih besar.",
+                    characters: [
+                        { emoji: "😭", name: "Adik Kelas", dialogue: "Mainanku diambil..." },
+                        { emoji: "😈", name: "Anak Besar", dialogue: "Ini mainan bagus, aku pinjam!" },
+                        { emoji: "🦸", name: "KAMU", dialogue: "Aku harus melindungi yang kecil!" }
+                    ],
+                    actions: [
+                        { text: "Minta Kembalikan", type: "defend", points: 25, correct: true },
+                        { text: "Lapor Guru Piket", type: "report", points: 20, correct: true },
+                        { text: "Belikan Mainan Baru", type: "help", points: 15, correct: true },
+                        { text: "Biarkan Saja", type: "ignore", points: -10, correct: false }
+                    ]
+                },
+                {
+                    title: "Tim Olahraga",
+                    description: "Saat membentuk tim, ada teman yang selalu dipilih terakhir.",
+                    characters: [
+                        { emoji: "😔", name: "Teman Terakhir", dialogue: "Aku selalu dipilih terakhir..." },
+                        { emoji: "🏃", name: "Kapten Tim", dialogue: "Kita pilih yang jago aja!" },
+                        { emoji: "⚽", name: "KAMU", dialogue: "Semua harus dapat kesempatan." }
+                    ],
+                    actions: [
+                        { text: "Pilih Dia Duluan", type: "include", points: 30, correct: true },
+                        { text: "Buat Tim Seimbang", type: "organize", points: 35, correct: true },
+                        { text: "Ikut Pilih Terakhir", type: "follow", points: -5, correct: false },
+                        { text: "Latih Dia Dulu", type: "mentor", points: 25, correct: true }
+                    ]
+                },
+                {
+                    title: "Fasilitas Rusak",
+                    description: "Ayunan di taman rusak dan berbahaya, tapi masih ada yang mau memakainya.",
+                    characters: [
+                        { emoji: "⚠️", name: "Ayunan Rusak", dialogue: "Rantai hampir putus..." },
+                        { emoji: "😅", name: "Teman Nekat", dialogue: "Ah, masih bisa kok!" },
+                        { emoji: "😰", name: "KAMU", dialogue: "Ini berbahaya!" }
+                    ],
+                    actions: [
+                        { text: "Larang Pakai", type: "protect", points: 25, correct: true },
+                        { text: "Lapor Petugas", type: "report", points: 30, correct: true },
+                        { text: "Pasang Tanda Bahaya", type: "organize", points: 35, correct: true },
+                        { text: "Ikut Main Juga", type: "join", points: -20, correct: false }
+                    ]
+                },
+                {
+                    title: "Teman Alergi",
+                    description: "Temanmu alergi makanan tertentu, tapi ada yang sengaja membawa makanan itu.",
+                    characters: [
+                        { emoji: "🤧", name: "Teman Alergi", dialogue: "Aku tidak bisa dekat makanan itu..." },
+                        { emoji: "😏", name: "Teman Jahil", dialogue: "Ah, lebay! Cuma makanan doang!" },
+                        { emoji: "🛡️", name: "KAMU", dialogue: "Alergi itu serius!" }
+                    ],
+                    actions: [
+                        { text: "Edukasi Tentang Alergi", type: "teach", points: 30, correct: true },
+                        { text: "Jauhkan Makanan", type: "protect", points: 25, correct: true },
+                        { text: "Ikut Mengejek", type: "bully", points: -25, correct: false },
+                        { text: "Panggil Guru", type: "report", points: 20, correct: true }
+                    ]
+                }
+            ],
+            classroom: [
+                {
+                    title: "Teman Kesulitan Belajar",
+                    description: "Temanmu tidak mengerti pelajaran matematika dan terlihat frustasi.",
+                    characters: [
+                        { emoji: "😰", name: "Teman", dialogue: "Aku tidak mengerti sama sekali..." },
+                        { emoji: "🤔", name: "KAMU", dialogue: "Mungkin aku bisa membantu?" }
+                    ],
+                    actions: [
+                        { text: "Ajari Dia", type: "teach", points: 20, correct: true },
+                        { text: "Beri Semangat", type: "encourage", points: 15, correct: true },
+                        { text: "Minta Tolong Guru", type: "help", points: 18, correct: true },
+                        { text: "Biarkan Saja", type: "ignore", points: -5, correct: false }
+                    ]
+                },
+                {
+                    title: "Presentasi Gugup",
+                    description: "Temanmu sangat gugup saat harus presentasi di depan kelas.",
+                    characters: [
+                        { emoji: "😨", name: "Teman Gugup", dialogue: "Aku takut presentasi..." },
+                        { emoji: "😊", name: "KAMU", dialogue: "Aku bisa membantumu!" }
+                    ],
+                    actions: [
+                        { text: "Latih Bersama", type: "help", points: 25, correct: true },
+                        { text: "Beri Tips", type: "teach", points: 20, correct: true },
+                        { text: "Ejek Ketakutannya", type: "mock", points: -15, correct: false },
+                        { text: "Tawarkan Gantian", type: "sacrifice", points: 30, correct: true }
+                    ]
+                },
+                {
+                    title: "Tugas Kelompok",
+                    description: "Dalam tugas kelompok, ada anggota yang tidak mau bekerja sama.",
+                    characters: [
+                        { emoji: "😤", name: "Anggota Malas", dialogue: "Kalian aja yang kerjain!" },
+                        { emoji: "😠", name: "Anggota Lain", dialogue: "Tidak adil!" },
+                        { emoji: "🤝", name: "KAMU", dialogue: "Kita harus kompak." }
+                    ],
+                    actions: [
+                        { text: "Ajak Diskusi", type: "mediate", points: 25, correct: true },
+                        { text: "Bagi Tugas Adil", type: "organize", points: 30, correct: true },
+                        { text: "Kerjakan Sendiri", type: "sacrifice", points: 15, correct: false },
+                        { text: "Lapor Guru", type: "report", points: 20, correct: true }
+                    ]
+                },
+                {
+                    title: "Nilai Jelek",
+                    description: "Temanmu mendapat nilai jelek dan merasa malu.",
+                    characters: [
+                        { emoji: "😞", name: "Teman Sedih", dialogue: "Nilaiaku jelek banget..." },
+                        { emoji: "💪", name: "KAMU", dialogue: "Masih bisa diperbaiki!" }
+                    ],
+                    actions: [
+                        { text: "Hibur & Motivasi", type: "encourage", points: 20, correct: true },
+                        { text: "Ajak Belajar Bareng", type: "help", points: 25, correct: true },
+                        { text: "Bilang Wajar Aja", type: "dismiss", points: 5, correct: false },
+                        { text: "Bantu Minta Remedial", type: "advocate", points: 30, correct: true }
+                    ]
+                },
+                {
+                    title: "Contek Massal",
+                    description: "Saat ujian, banyak teman yang menyontek dan mengajakmu ikut.",
+                    characters: [
+                        { emoji: "😈", name: "Teman Penyontek", dialogue: "Ayo contek bareng!" },
+                        { emoji: "📝", name: "Soal Ujian", dialogue: "Pertanyaan sulit..." },
+                        { emoji: "😇", name: "KAMU", dialogue: "Ini tidak benar..." }
+                    ],
+                    actions: [
+                        { text: "Tolak & Kerjakan Sendiri", type: "honest", points: 35, correct: true },
+                        { text: "Ingatkan Tentang Kejujuran", type: "teach", points: 30, correct: true },
+                        { text: "Ikut Menyontek", type: "cheat", points: -30, correct: false },
+                        { text: "Lapor Pengawas", type: "report", points: 25, correct: true }
+                    ]
+                },
+                {
+                    title: "Diskriminasi Guru",
+                    description: "Guru terlihat pilih kasih dan tidak adil kepada beberapa siswa.",
+                    characters: [
+                        { emoji: "😔", name: "Siswa Diperlakukan Tidak Adil", dialogue: "Guru selalu memarahi aku..." },
+                        { emoji: "😠", name: "Guru Tidak Adil", dialogue: "Kamu selalu bermasalah!" },
+                        { emoji: "⚖️", name: "KAMU", dialogue: "Ini tidak adil..." }
+                    ],
+                    actions: [
+                        { text: "Dukung Teman", type: "support", points: 25, correct: true },
+                        { text: "Bicara dengan Guru", type: "advocate", points: 35, correct: true },
+                        { text: "Lapor ke Kepala Sekolah", type: "report", points: 40, correct: true },
+                        { text: "Diam Saja", type: "ignore", points: -10, correct: false }
+                    ]
+                },
+                {
+                    title: "Teman Berkebutuhan Khusus",
+                    description: "Ada teman berkebutuhan khusus yang sering diejek oleh yang lain.",
+                    characters: [
+                        { emoji: "😢", name: "Teman Berkebutuhan Khusus", dialogue: "Mereka selalu mengejekku..." },
+                        { emoji: "😏", name: "Pengganggu", dialogue: "Dia aneh, tidak seperti kita!" },
+                        { emoji: "🤗", name: "KAMU", dialogue: "Semua orang berharga!" }
+                    ],
+                    actions: [
+                        { text: "Bela & Lindungi", type: "defend", points: 40, correct: true },
+                        { text: "Edukasi Tentang Inklusi", type: "teach", points: 35, correct: true },
+                        { text: "Jadi Teman Baik", type: "befriend", points: 30, correct: true },
+                        { text: "Ikut Mengejek", type: "bully", points: -40, correct: false }
+                    ]
+                }
+            ]
+        };
+
+        // Save System Class (unchanged)
         class SaveSystem {
             constructor() {
                 this.saveKey = 'heroKebaikanSave';
-                this.autoSaveInterval = 30000; // Auto-save every 30 seconds
+                this.autoSaveInterval = 30000;
                 this.startAutoSave();
             }
 
@@ -442,7 +1199,7 @@
                     const saveData = {
                         ...gameState,
                         lastPlayed: new Date().toISOString(),
-                        version: '1.0'
+                        version: '2.0'
                     };
                     localStorage.setItem(this.saveKey, JSON.stringify(saveData));
                     this.showSaveNotification();
@@ -459,7 +1216,6 @@
                     if (savedData) {
                         const parsedData = JSON.parse(savedData);
                         
-                        // Merge saved data with current state
                         Object.keys(parsedData).forEach(key => {
                             if (key !== 'version') {
                                 gameState[key] = parsedData[key];
@@ -582,7 +1338,7 @@
         // Initialize save system
         const saveSystem = new SaveSystem();
 
-        // Sound System using Web Audio API
+        // Sound System (unchanged)
         class SoundSystem {
             constructor() {
                 this.audioContext = null;
@@ -600,7 +1356,6 @@
             }
 
             createSounds() {
-                // Create different sound effects using oscillators
                 this.sounds = {
                     click: () => this.playTone(800, 0.1, 'sine'),
                     success: () => this.playChord([523, 659, 784], 0.3, 'sine'),
@@ -672,104 +1427,357 @@
         // Initialize sound system
         const soundSystem = new SoundSystem();
 
-        // Game Scenarios
-        const scenarios = {
-            school: [
-                {
-                    title: "Teman Baru di Koridor",
-                    description: "Kamu melihat anak baru berdiri sendiri di koridor. Dia terlihat bingung dan kesepian.",
-                    characters: [
-                        { emoji: "😟", name: "Anak Baru", dialogue: "Aku tidak tahu harus ke mana..." },
-                        { emoji: "😊", name: "KAMU", dialogue: "Apa yang harus kulakukan?" }
-                    ],
-                    actions: [
-                        { text: "Ajak Bicara", type: "befriend", points: 15, correct: true },
-                        { text: "Tunjukkan Jalan", type: "help", points: 10, correct: true },
-                        { text: "Abaikan", type: "ignore", points: -5, correct: false },
-                        { text: "Panggil Teman Lain", type: "social", points: 20, correct: true }
-                    ]
-                },
-                {
-                    title: "Bullying di Kantin",
-                    description: "Seorang anak besar mengambil bekal temanmu dan tidak mau mengembalikannya.",
-                    characters: [
-                        { emoji: "😡", name: "Pembully", dialogue: "Bekalmu jelek! Aku ambil saja!" },
-                        { emoji: "😢", name: "Korban", dialogue: "Kembalikan bekalku..." },
-                        { emoji: "😠", name: "KAMU", dialogue: "Ini tidak boleh dibiarkan!" }
-                    ],
-                    actions: [
-                        { text: "Laporkan ke Guru", type: "report", points: 25, correct: true },
-                        { text: "Bela Teman", type: "defend", points: 20, correct: true },
-                        { text: "Ajak Pergi", type: "escape", points: 10, correct: false },
-                        { text: "Diam Saja", type: "ignore", points: -10, correct: false }
-                    ]
-                }
-            ],
-            playground: [
-                {
-                    title: "Teman Terjatuh",
-                    description: "Temanmu terjatuh saat bermain dan lututnya berdarah. Dia menangis kesakitan.",
-                    characters: [
-                        { emoji: "😭", name: "Teman", dialogue: "Aduh... sakit sekali!" },
-                        { emoji: "😟", name: "KAMU", dialogue: "Aku harus membantu!" }
-                    ],
-                    actions: [
-                        { text: "Panggil Guru", type: "help", points: 20, correct: true },
-                        { text: "Hibur Dia", type: "comfort", points: 15, correct: true },
-                        { text: "Cari Obat", type: "medical", points: 25, correct: true },
-                        { text: "Tinggalkan", type: "ignore", points: -15, correct: false }
-                    ]
-                }
-            ],
-            classroom: [
-                {
-                    title: "Teman Kesulitan Belajar",
-                    description: "Temanmu tidak mengerti pelajaran matematika dan terlihat frustasi.",
-                    characters: [
-                        { emoji: "😰", name: "Teman", dialogue: "Aku tidak mengerti sama sekali..." },
-                        { emoji: "🤔", name: "KAMU", dialogue: "Mungkin aku bisa membantu?" }
-                    ],
-                    actions: [
-                        { text: "Ajari Dia", type: "teach", points: 20, correct: true },
-                        { text: "Beri Semangat", type: "encourage", points: 15, correct: true },
-                        { text: "Minta Tolong Guru", type: "help", points: 18, correct: true },
-                        { text: "Biarkan Saja", type: "ignore", points: -5, correct: false }
-                    ]
-                }
-            ]
-        };
+        // Math Mode Functions
+        function getMathProblem() {
+            const categories = ['basic', 'algebra', 'geometry', 'advanced'];
+            const availableCategories = categories.filter(cat => {
+                if (cat === 'basic') return true;
+                if (cat === 'algebra') return gameState.intelligenceLevel >= 2;
+                if (cat === 'geometry') return gameState.intelligenceLevel >= 3;
+                if (cat === 'advanced') return gameState.intelligenceLevel >= 4;
+                return false;
+            });
+            
+            const category = availableCategories[Math.floor(Math.random() * availableCategories.length)];
+            const problems = mathProblems[category];
+            return {
+                ...problems[Math.floor(Math.random() * problems.length)],
+                category: category
+            };
+        }
+
+        function showMathTutoring() {
+            gameState.mathMode = true;
+            soundSystem.play('transition');
+            
+            const gameScene = document.getElementById('gameScene');
+            gameScene.style.background = 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #3b82f6 100%)';
+            gameScene.classList.add('transitioning');
+            
+            sceneContent.classList.add('fade-out');
+            
+            setTimeout(() => {
+                const problem = getMathProblem();
+                
+                sceneContent.innerHTML = `
+                    <div class="text-center mb-6">
+                        <div class="text-4xl md:text-6xl mb-4">🧮</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-800 mb-4">Mode Tutor Matematika</h3>
+                        <p class="text-sm md:text-base text-gray-700 mb-4">Bantu temanmu memahami soal matematika ini!</p>
+                        <div class="bg-blue-100 rounded-xl p-4 mb-4">
+                            <div class="text-xs md:text-sm text-blue-600 font-bold mb-2">Kategori: ${problem.category.toUpperCase()}</div>
+                            <div class="text-sm md:text-lg font-bold text-blue-800">${problem.question}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center space-x-6 mb-6">
+                        <div class="text-center slide-in-left">
+                            <div class="text-4xl md:text-6xl mb-2">😕</div>
+                            <div class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mb-2">TEMAN</div>
+                            <div class="bg-white border-2 border-red-300 rounded-lg p-3 shadow-lg max-w-xs">
+                                <p class="text-sm text-red-700 font-semibold">"Aku bingung dengan soal ini..."</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center slide-in-right">
+                            <div class="text-4xl md:text-6xl mb-2">🤓</div>
+                            <div class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold mb-2">KAMU</div>
+                            <div class="bg-white border-2 border-blue-300 rounded-lg p-3 shadow-lg max-w-xs">
+                                <p class="text-sm text-blue-700 font-semibold">"Ayo kita selesaikan bersama!"</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                sceneContent.classList.remove('fade-out');
+                sceneContent.classList.add('fade-in');
+                
+                actionPanel.classList.remove('hidden');
+                actionPanel.classList.add('slide-in-up');
+                
+                actionButtons.innerHTML = problem.options.map((option, index) => `
+                    <button class="math-option bg-gradient-to-b from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-4 px-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 active:scale-95" 
+                            data-index="${index}" data-correct="${index === problem.correct}"
+                            style="animation-delay: ${index * 0.1}s">
+                        <div class="text-lg mb-2">${String.fromCharCode(65 + index)}</div>
+                        <div class="text-sm">${option}</div>
+                    </button>
+                `).join('');
+                
+                document.querySelectorAll('.math-option').forEach((btn, index) => {
+                    btn.addEventListener('click', (e) => handleMathAnswer(e, problem));
+                    btn.classList.add('bounce-in');
+                    btn.addEventListener('mouseenter', () => soundSystem.play('click'));
+                });
+                
+                setTimeout(() => {
+                    gameScene.classList.remove('transitioning');
+                    sceneContent.classList.remove('fade-in');
+                    actionPanel.classList.remove('slide-in-up');
+                }, 600);
+                
+            }, 500);
+        }
+
+        function handleMathAnswer(event, problem) {
+            const btn = event.currentTarget;
+            const selectedIndex = parseInt(btn.dataset.index);
+            const isCorrect = selectedIndex === problem.correct;
+            
+            soundSystem.play(isCorrect ? 'success' : 'error');
+            
+            btn.classList.add(isCorrect ? 'bounce-in' : 'shake');
+            
+            // Update stats
+            if (isCorrect) {
+                gameState.mathPoints += 25;
+                gameState.kindnessPoints += 15; // Also get kindness points for helping
+                updateMathLevel();
+                updateMissionProgress('mathTutor');
+            } else {
+                gameState.mathPoints += 5; // Small points for trying
+            }
+            
+            setTimeout(() => {
+                showMathFeedback(isCorrect, problem);
+            }, 500);
+            
+            saveSystem.saveGame();
+            updateUI();
+        }
+
+        function updateMathLevel() {
+            const newIntelligenceLevel = Math.floor(gameState.mathPoints / 50) + 1;
+            if (newIntelligenceLevel > gameState.intelligenceLevel) {
+                gameState.intelligenceLevel = newIntelligenceLevel;
+                
+                // Update intelligence title
+                if (gameState.intelligenceLevel >= 8) gameState.intelligenceTitle = 'Genius Matematika';
+                else if (gameState.intelligenceLevel >= 6) gameState.intelligenceTitle = 'Master Matematika';
+                else if (gameState.intelligenceLevel >= 4) gameState.intelligenceTitle = 'Ahli Matematika';
+                else if (gameState.intelligenceLevel >= 2) gameState.intelligenceTitle = 'Tutor Handal';
+                
+                showIntelligenceLevelUp();
+            }
+        }
+
+        function showIntelligenceLevelUp() {
+            soundSystem.play('levelUp');
+            
+            setTimeout(() => {
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-400 to-indigo-500 text-white p-6 rounded-2xl shadow-2xl z-50 text-center max-w-sm mx-4';
+                notification.innerHTML = `
+                    <div class="text-4xl mb-2">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">Intelligence Level Up!</h3>
+                    <p class="text-sm mb-3">Level Kepintaran: ${gameState.intelligenceLevel}</p>
+                    <div class="text-lg font-bold">${gameState.intelligenceTitle}</div>
+                    <div class="text-xs mt-2 opacity-90">Soal matematika baru terbuka!</div>
+                `;
+                
+                document.body.appendChild(notification);
+                notification.classList.add('bounce-in');
+                
+                setTimeout(() => {
+                    notification.classList.add('fade-out');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 3000);
+            }, 1000);
+        }
+
+        function showMathFeedback(isCorrect, problem) {
+            sceneContent.innerHTML = `
+                <div class="text-center">
+                    <div class="text-8xl mb-4">${isCorrect ? '🎉' : '💭'}</div>
+                    <h3 class="text-2xl font-bold ${isCorrect ? 'text-green-600' : 'text-orange-600'} mb-4">
+                        ${isCorrect ? 'Jawaban Benar!' : 'Coba Lagi!'}
+                    </h3>
+                    <div class="bg-blue-100 rounded-xl p-4 mb-4">
+                        <h4 class="font-bold text-blue-800 mb-2">Penjelasan:</h4>
+                        <p class="text-sm text-blue-700">${problem.explanation}</p>
+                    </div>
+                    <div class="text-xl font-bold ${isCorrect ? 'text-green-600' : 'text-blue-600'} mb-2">
+                        +${isCorrect ? 25 : 5} Poin Matematika
+                    </div>
+                    ${isCorrect ? '<div class="text-lg font-bold text-purple-600 mb-6">+15 Poin Kebaikan</div>' : ''}
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <button id="continueMathBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                            Soal Berikutnya 🧮
+                        </button>
+                        <button id="exitMathBtn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                            Kembali ke Game 🎮
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('continueMathBtn').addEventListener('click', () => {
+                showMathTutoring();
+            });
+            
+            document.getElementById('exitMathBtn').addEventListener('click', () => {
+                gameState.mathMode = false;
+                showWelcomeScene();
+                actionPanel.classList.add('hidden');
+            });
+        }
 
         // DOM Elements
         const playerLevelEl = document.getElementById('playerLevel');
         const kindnessPointsEl = document.getElementById('kindnessPoints');
         const empathyLevelEl = document.getElementById('empathyLevel');
+        const intelligenceLevelEl = document.getElementById('intelligenceLevel');
+        const mathPointsEl = document.getElementById('mathPoints');
         const sceneContent = document.getElementById('sceneContent');
         const actionPanel = document.getElementById('actionPanel');
         const actionButtons = document.getElementById('actionButtons');
         const levelUpPanel = document.getElementById('levelUpPanel');
+        const activeMissions = document.getElementById('activeMissions');
 
         // Location buttons
         const schoolBtn = document.getElementById('schoolBtn');
         const playgroundBtn = document.getElementById('playgroundBtn');
         const classroomBtn = document.getElementById('classroomBtn');
 
+        // Mission Management Functions
+        function getAvailableMissions() {
+            return Object.entries(gameState.missions).filter(([key, mission]) => {
+                return gameState.playerLevel >= mission.unlockLevel && !mission.completed;
+            });
+        }
+
+        function getActiveMissions() {
+            // Show max 6 active missions at a time for better focus
+            const available = getAvailableMissions();
+            const maxActive = 6;
+            
+            // If we have more missions than max, rotate them based on completion count
+            if (available.length > maxActive) {
+                const completedCount = Object.values(gameState.missions).filter(m => m.completed).length;
+                const startIndex = (completedCount * 2) % available.length;
+                
+                const rotated = [];
+                for (let i = 0; i < maxActive && i < available.length; i++) {
+                    rotated.push(available[(startIndex + i) % available.length]);
+                }
+                return rotated;
+            }
+            
+            return available;
+        }
+
+        function renderMissions() {
+            const activeMissionsList = getActiveMissions();
+            const completedMissions = Object.entries(gameState.missions).filter(([key, mission]) => mission.completed);
+            const totalAvailable = getAvailableMissions().length;
+            
+            activeMissions.innerHTML = '';
+            
+            // Add mission rotation indicator if there are more missions than displayed
+            if (totalAvailable > 6) {
+                const rotationIndicator = document.createElement('div');
+                rotationIndicator.className = 'col-span-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-xl p-3 mb-2 text-center text-white font-bold text-sm';
+                rotationIndicator.innerHTML = `
+                    🔄 Menampilkan 6 dari ${totalAvailable} misi aktif
+                    <div class="text-xs opacity-90 mt-1">Misi akan berganti otomatis saat ada yang selesai</div>
+                `;
+                activeMissions.appendChild(rotationIndicator);
+            }
+            
+            // Show active missions
+            activeMissionsList.forEach(([key, mission]) => {
+                const progressPercentage = (mission.progress / mission.target) * 100;
+                const missionCard = document.createElement('div');
+                missionCard.className = 'mission-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg';
+                
+                missionCard.innerHTML = `
+                    <div class="text-2xl md:text-3xl mb-2">${mission.emoji}</div>
+                    <h4 class="font-bold text-purple-800 mb-2 text-sm md:text-base">${mission.name}</h4>
+                    <p class="text-xs md:text-sm text-gray-600 mb-3">${mission.description}</p>
+                    <div class="bg-gray-200 rounded-full h-2 mb-2">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500" 
+                             style="width: ${progressPercentage}%"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-xs text-gray-500">Progress: ${mission.progress}/${mission.target}</div>
+                        <div class="text-xs font-bold text-green-600">+${mission.reward} poin</div>
+                    </div>
+                    <div class="text-xs text-purple-600 mt-1">Level ${mission.unlockLevel}+ • ${mission.category}</div>
+                `;
+                
+                activeMissions.appendChild(missionCard);
+            });
+            
+            // Show some completed missions
+            completedMissions.slice(-3).forEach(([key, mission]) => {
+                const missionCard = document.createElement('div');
+                missionCard.className = 'mission-card mission-completed rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg';
+                
+                missionCard.innerHTML = `
+                    <div class="text-2xl md:text-3xl mb-2">${mission.emoji}</div>
+                    <h4 class="font-bold text-white mb-2 text-sm md:text-base">${mission.name}</h4>
+                    <p class="text-xs md:text-sm text-white opacity-90 mb-3">${mission.description}</p>
+                    <div class="bg-white bg-opacity-30 rounded-full h-2 mb-2">
+                        <div class="bg-white h-2 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-xs text-white opacity-90">✅ SELESAI</div>
+                        <div class="text-xs font-bold text-white">+${mission.reward} poin</div>
+                    </div>
+                `;
+                
+                activeMissions.appendChild(missionCard);
+            });
+            
+            // Show locked missions preview
+            const lockedMissions = Object.entries(gameState.missions).filter(([key, mission]) => {
+                return gameState.playerLevel < mission.unlockLevel;
+            });
+            
+            lockedMissions.slice(0, 2).forEach(([key, mission]) => {
+                const missionCard = document.createElement('div');
+                missionCard.className = 'mission-card mission-locked bg-gray-300 rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg';
+                
+                missionCard.innerHTML = `
+                    <div class="text-2xl md:text-3xl mb-2">🔒</div>
+                    <h4 class="font-bold text-gray-600 mb-2 text-sm md:text-base">${mission.name}</h4>
+                    <p class="text-xs md:text-sm text-gray-500 mb-3">Terkunci - Capai Level ${mission.unlockLevel}</p>
+                    <div class="bg-gray-400 rounded-full h-2 mb-2">
+                        <div class="bg-gray-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-xs text-gray-500">Butuh Level ${mission.unlockLevel}</div>
+                        <div class="text-xs font-bold text-gray-600">+${mission.reward} poin</div>
+                    </div>
+                `;
+                
+                activeMissions.appendChild(missionCard);
+            });
+        }
+
         // Initialize game
         function updateUI() {
             // Update mobile stats
             playerLevelEl.textContent = gameState.playerLevel;
             kindnessPointsEl.textContent = gameState.kindnessPoints;
-            empathyLevelEl.textContent = gameState.empathyLevel;
+            intelligenceLevelEl.textContent = gameState.intelligenceLevel;
+            mathPointsEl.textContent = gameState.mathPoints;
             
             // Update desktop stats
             const playerLevelDesktop = document.getElementById('playerLevelDesktop');
             const kindnessPointsDesktop = document.getElementById('kindnessPointsDesktop');
-            const empathyLevelDesktop = document.getElementById('empathyLevelDesktop');
+            const intelligenceLevelDesktop = document.getElementById('intelligenceLevelDesktop');
+            const mathPointsDesktop = document.getElementById('mathPointsDesktop');
             
             if (playerLevelDesktop) playerLevelDesktop.textContent = gameState.playerLevel;
             if (kindnessPointsDesktop) kindnessPointsDesktop.textContent = gameState.kindnessPoints;
-            if (empathyLevelDesktop) empathyLevelDesktop.textContent = gameState.empathyLevel;
+            if (intelligenceLevelDesktop) intelligenceLevelDesktop.textContent = gameState.intelligenceLevel;
+            if (mathPointsDesktop) mathPointsDesktop.textContent = gameState.mathPoints;
             
             updateSaveInfo();
+            renderMissions();
         }
 
         function updateSaveInfo() {
@@ -795,21 +1803,22 @@
         }
 
         function showScenario(location, scenarioIndex = 0) {
-            // Play transition sound
             soundSystem.play('transition');
             
-            // Start transition effect
             const gameScene = document.getElementById('gameScene');
             gameScene.classList.add('transitioning');
             
-            // Fade out current content
             sceneContent.classList.add('fade-out');
             
             setTimeout(() => {
-                const scenario = scenarios[location][scenarioIndex];
+                const locationScenarios = scenarios[location];
+                if (scenarioIndex >= locationScenarios.length) {
+                    scenarioIndex = Math.floor(Math.random() * locationScenarios.length);
+                }
+                
+                const scenario = locationScenarios[scenarioIndex];
                 gameState.currentLocation = location;
                 
-                // Get location-specific background
                 const locationBg = getLocationBackground(location);
                 gameScene.style.background = locationBg;
                 
@@ -833,11 +1842,9 @@
                     </div>
                 `;
                 
-                // Remove fade-out and add fade-in
                 sceneContent.classList.remove('fade-out');
                 sceneContent.classList.add('fade-in');
                 
-                // Show action panel with slide animation
                 actionPanel.classList.remove('hidden');
                 actionPanel.classList.add('slide-in-up');
                 
@@ -850,14 +1857,12 @@
                     </button>
                 `).join('');
                 
-                // Add event listeners to action buttons
                 document.querySelectorAll('.action-btn').forEach((btn, index) => {
                     btn.addEventListener('click', handleAction);
                     btn.classList.add('bounce-in');
                     btn.addEventListener('mouseenter', () => soundSystem.play('click'));
                 });
                 
-                // Remove transition effect
                 setTimeout(() => {
                     gameScene.classList.remove('transitioning');
                     sceneContent.classList.remove('fade-in');
@@ -894,7 +1899,9 @@
             const emojis = {
                 befriend: '🤝', help: '🆘', ignore: '🙈', social: '👥',
                 report: '📢', defend: '🛡️', escape: '🏃', comfort: '💝',
-                teach: '📖', encourage: '💪', medical: '🏥'
+                teach: '📖', encourage: '💪', medical: '🏥', share: '🤲',
+                mediate: '🕊️', organize: '📋', include: '🫂', mentor: '👨‍🏫',
+                protect: '🛡️', advocate: '⚖️', honest: '✨', support: '🤗'
             };
             return emojis[actionType] || '⭐';
         }
@@ -905,80 +1912,107 @@
             const points = parseInt(btn.dataset.points);
             const isCorrect = btn.dataset.correct === 'true';
             
-            // Play sound effect
             soundSystem.play(isCorrect ? 'success' : 'error');
             
-            // Add visual feedback
             btn.classList.add(isCorrect ? 'bounce-in' : 'shake');
             
-            // Update game state
             gameState.kindnessPoints += points;
             gameState.scenariosCompleted++;
             
-            // Update mission progress
             updateMissionProgress(actionType);
             
-            // Show feedback
             setTimeout(() => {
                 showActionFeedback(actionType, points, isCorrect);
             }, 500);
             
-            // Check for level up
             checkLevelUp();
-            
-            // Auto-save progress
             saveSystem.saveGame();
-            
             updateUI();
         }
 
         function updateMissionProgress(actionType) {
             const missionMap = {
-                befriend: 'befriendNew',
-                social: 'befriendNew',
-                comfort: 'giveSupport',
-                encourage: 'giveSupport',
-                report: 'reportBully'
+                befriend: ['befriendNew', 'includeOthers'],
+                social: ['befriendNew', 'includeOthers'],
+                comfort: ['giveSupport', 'peerCounselor'],
+                encourage: ['giveSupport', 'empathyMaster'],
+                report: ['reportBully', 'antibullyingCampaign'],
+                share: ['shareFood', 'weeklyChallenge'],
+                teach: ['helpStudy', 'mentorJunior', 'mathTutor'],
+                include: ['includeOthers', 'kindnessAmbassador'],
+                mediate: ['mediateConflict', 'peerCounselor'],
+                organize: ['organizeActivity', 'createClub'],
+                mentor: ['mentorJunior', 'kindnessAmbassador', 'mathMentor'],
+                protect: ['reportBully', 'antibullyingCampaign'],
+                advocate: ['antibullyingCampaign', 'kindnessAmbassador'],
+                help: ['weeklyChallenge', 'empathyMaster'],
+                defend: ['reportBully', 'antibullyingCampaign'],
+                support: ['giveSupport', 'peerCounselor'],
+                mathTutor: ['mathTutor', 'algebraHelper', 'geometryGuide', 'mathMentor', 'mathChampion']
             };
             
-            const missionKey = missionMap[actionType];
-            if (missionKey && !gameState.missions[missionKey].completed) {
-                gameState.missions[missionKey].progress++;
-                
-                // Play mission progress sound
-                soundSystem.play('mission');
-                
-                if (gameState.missions[missionKey].progress >= gameState.missions[missionKey].target) {
-                    gameState.missions[missionKey].completed = true;
-                    gameState.kindnessPoints += 50; // Bonus for completing mission
-                    showMissionComplete(missionKey);
-                }
-                
-                updateMissionUI();
-            }
-        }
-
-        function updateMissionUI() {
-            const progressBars = {
-                befriendNew: document.getElementById('mission1Progress'),
-                giveSupport: document.getElementById('mission2Progress'),
-                reportBully: document.getElementById('mission3Progress')
-            };
+            const relatedMissions = missionMap[actionType] || [];
+            let missionCompleted = false;
             
-            Object.keys(gameState.missions).forEach(key => {
-                const mission = gameState.missions[key];
-                const progressBar = progressBars[key];
-                if (progressBar) {
-                    const percentage = (mission.progress / mission.target) * 100;
-                    progressBar.style.width = `${Math.min(percentage, 100)}%`;
+            relatedMissions.forEach(missionKey => {
+                const mission = gameState.missions[missionKey];
+                if (mission && !mission.completed && gameState.playerLevel >= mission.unlockLevel) {
+                    mission.progress++;
+                    soundSystem.play('mission');
                     
-                    if (mission.completed) {
-                        progressBar.parentElement.parentElement.classList.add('mission-complete');
-                        progressBar.parentElement.parentElement.style.background = 'linear-gradient(135deg, #10B981, #059669)';
-                        progressBar.parentElement.parentElement.style.color = 'white';
+                    if (mission.progress >= mission.target) {
+                        mission.completed = true;
+                        gameState.kindnessPoints += mission.reward;
+                        showMissionComplete(missionKey);
+                        missionCompleted = true;
                     }
                 }
             });
+            
+            // Auto-activate new missions when one is completed
+            if (missionCompleted) {
+                setTimeout(() => {
+                    activateNewMissions();
+                }, 2000);
+            }
+            
+            renderMissions();
+        }
+
+        function activateNewMissions() {
+            const availableMissions = getAvailableMissions();
+            const completedCount = Object.values(gameState.missions).filter(m => m.completed).length;
+            
+            // Show notification about new missions
+            if (availableMissions.length > 0) {
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-purple-400 to-pink-500 text-white p-6 rounded-2xl shadow-2xl z-50 text-center max-w-sm mx-4';
+                notification.innerHTML = `
+                    <div class="text-4xl mb-2">🎯</div>
+                    <h3 class="text-xl font-bold mb-2">Misi Baru Tersedia!</h3>
+                    <p class="text-sm mb-3">Hero Kebaikan level ${gameState.playerLevel} mendapat akses misi baru!</p>
+                    <div class="text-lg font-bold">Lihat panel misi di bawah! ⬇️</div>
+                `;
+                
+                document.body.appendChild(notification);
+                notification.classList.add('bounce-in');
+                
+                // Add pulse effect to mission panel
+                const missionPanel = activeMissions.parentElement;
+                missionPanel.classList.add('pulse-glow');
+                
+                setTimeout(() => {
+                    notification.classList.add('fade-out');
+                    missionPanel.classList.remove('pulse-glow');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 4000);
+                
+                soundSystem.play('levelUp');
+            }
+            
+            renderMissions();
         }
 
         function showActionFeedback(actionType, points, isCorrect) {
@@ -986,7 +2020,14 @@
                 befriend: { good: "Luar biasa! Kamu membuat teman baru merasa diterima!", bad: "Coba pikirkan perasaan teman baru itu." },
                 help: { good: "Hebat! Membantu orang lain adalah tindakan mulia!", bad: "Membantu orang lain selalu lebih baik." },
                 report: { good: "Keputusan yang tepat! Melaporkan bullying sangat penting!", bad: "Bullying harus dilaporkan ke orang dewasa." },
-                comfort: { good: "Kamu sangat peduli! Menghibur teman adalah hal yang baik!", bad: "Teman yang sedih butuh dukungan." }
+                comfort: { good: "Kamu sangat peduli! Menghibur teman adalah hal yang baik!", bad: "Teman yang sedih butuh dukungan." },
+                share: { good: "Berbagi itu indah! Kamu menunjukkan kebaikan hati!", bad: "Berbagi membuat dunia lebih baik." },
+                teach: { good: "Mengajar teman menunjukkan kepedulianmu!", bad: "Membantu teman belajar itu penting." },
+                mediate: { good: "Kamu jadi pembawa damai! Hebat sekali!", bad: "Konflik perlu diselesaikan dengan bijak." },
+                organize: { good: "Jiwa kepemimpinanmu luar biasa!", bad: "Mengorganisir kegiatan butuh keberanian." },
+                include: { good: "Kamu membuat semua merasa diterima!", bad: "Mengajak semua ikut itu penting." },
+                protect: { good: "Kamu melindungi yang lemah! Heroik!", bad: "Melindungi orang lain itu mulia." },
+                advocate: { good: "Kamu memperjuangkan keadilan!", bad: "Bersuara untuk kebenaran itu penting." }
             };
             
             const message = feedbackMessages[actionType] || { good: "Tindakan yang baik!", bad: "Coba pikirkan lagi." };
@@ -1020,8 +2061,10 @@
                 gameState.playerLevel = newLevel;
                 
                 // Update empathy level
-                if (gameState.playerLevel >= 5) gameState.empathyLevel = 'Master Empati';
-                else if (gameState.playerLevel >= 3) gameState.empathyLevel = 'Ahli Kebaikan';
+                if (gameState.playerLevel >= 10) gameState.empathyLevel = 'Legenda Kebaikan';
+                else if (gameState.playerLevel >= 8) gameState.empathyLevel = 'Master Empati';
+                else if (gameState.playerLevel >= 6) gameState.empathyLevel = 'Duta Kebaikan';
+                else if (gameState.playerLevel >= 4) gameState.empathyLevel = 'Ahli Kebaikan';
                 else if (gameState.playerLevel >= 2) gameState.empathyLevel = 'Sahabat Baik';
                 
                 showLevelUp();
@@ -1029,73 +2072,102 @@
         }
 
         function showLevelUp() {
-            // Play level up sound
             soundSystem.play('levelUp');
             
             const rewards = [
                 "Kemampuan Empati Meningkat!",
                 "Unlock: Misi Spesial Baru!",
                 "Bonus: 25 Poin Kebaikan!",
-                "Achievement: Hero Sejati!"
+                "Achievement: Hero Sejati!",
+                "Skill Baru: Mediator Handal!",
+                "Unlock: Tantangan Level Tinggi!",
+                "Bonus: Akses Misi Eksklusif!",
+                "Achievement: Pembawa Perubahan!"
             ];
             
             document.getElementById('levelUpReward').innerHTML = `
                 <div class="text-4xl mb-2">🏆</div>
                 <p class="font-bold text-purple-800">${rewards[Math.floor(Math.random() * rewards.length)]}</p>
+                <div class="text-sm text-gray-600 mt-2">Level ${gameState.playerLevel} - ${gameState.empathyLevel}</div>
             `;
             
             levelUpPanel.classList.remove('hidden');
             levelUpPanel.classList.add('bounce-in');
-            gameState.kindnessPoints += 25; // Level up bonus
+            gameState.kindnessPoints += 25;
         }
 
         function showMissionComplete(missionKey) {
-            const missionNames = {
-                befriendNew: "Temani Teman Baru",
-                giveSupport: "Beri Semangat",
-                reportBully: "Laporkan Pembully"
-            };
+            const mission = gameState.missions[missionKey];
             
-            // Show mission complete animation
             setTimeout(() => {
-                alert(`🎉 Misi "${missionNames[missionKey]}" Selesai! +50 Poin Bonus!`);
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-green-400 to-blue-500 text-white p-6 rounded-2xl shadow-2xl z-50 text-center max-w-sm mx-4';
+                notification.innerHTML = `
+                    <div class="text-4xl mb-2">${mission.emoji}</div>
+                    <h3 class="text-xl font-bold mb-2">Misi Selesai!</h3>
+                    <p class="text-sm mb-3">${mission.name}</p>
+                    <div class="text-lg font-bold">+${mission.reward} Poin Bonus!</div>
+                `;
+                
+                document.body.appendChild(notification);
+                notification.classList.add('bounce-in');
+                
+                setTimeout(() => {
+                    notification.classList.add('fade-out');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 3000);
             }, 1000);
         }
 
         function showWelcomeScene() {
-            // Play transition sound
             soundSystem.play('transition');
             
-            // Reset background to default
             const gameScene = document.getElementById('gameScene');
             gameScene.style.background = 'white';
             gameScene.classList.add('transitioning');
             
-            // Fade out current content
             sceneContent.classList.add('fade-out');
             
             setTimeout(() => {
+                const completedMissions = Object.values(gameState.missions).filter(m => m.completed).length;
+                const totalMissions = Object.keys(gameState.missions).length;
+                
                 sceneContent.innerHTML = `
                     <div class="text-center">
                         <div class="text-6xl md:text-8xl mb-4 float">🌟</div>
                         <h3 class="text-xl md:text-3xl font-bold text-purple-800 mb-4 px-2">Pilih Lokasi Petualangan!</h3>
-                        <p class="text-sm md:text-lg text-gray-700 mb-6 px-2">Dimana kamu ingin membantu teman-teman hari ini?</p>
+                        <p class="text-sm md:text-lg text-gray-700 mb-4 px-2">Dimana kamu ingin membantu teman-teman hari ini?</p>
+                        
+                        <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-4 mb-6 mx-4">
+                            <h4 class="font-bold text-purple-800 mb-2">📊 Progress Hero</h4>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span class="text-gray-600">Misi Selesai:</span>
+                                    <span class="font-bold text-green-600 ml-2">${completedMissions}/${totalMissions}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600">Skenario:</span>
+                                    <span class="font-bold text-blue-600 ml-2">${gameState.scenariosCompleted}</span>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="flex justify-center space-x-4 md:space-x-8 mb-6">
                             <div class="text-center slide-in-up">
                                 <div class="text-4xl md:text-6xl mb-2">😊</div>
                                 <div class="bg-purple-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-bold">KAMU</div>
                                 <div class="text-xs text-purple-600 mt-1">Hero Kebaikan Level ${gameState.playerLevel}</div>
+                                <div class="text-xs text-gray-500">${gameState.empathyLevel}</div>
                             </div>
                         </div>
                     </div>
                 `;
                 
-                // Remove fade-out and add fade-in
                 sceneContent.classList.remove('fade-out');
                 sceneContent.classList.add('fade-in');
                 
-                // Remove transition effect
                 setTimeout(() => {
                     gameScene.classList.remove('transitioning');
                     sceneContent.classList.remove('fade-in');
@@ -1104,20 +2176,65 @@
             }, 500);
         }
 
-        // Event Listeners
+        // Location button cooldown system
+        let locationCooldowns = {
+            school: false,
+            playground: false,
+            classroom: false
+        };
+
+        function setLocationCooldown(location, duration = 3000) {
+            locationCooldowns[location] = true;
+            const btn = document.getElementById(location + 'Btn');
+            
+            // Disable button visually
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btn.disabled = true;
+            
+            // Add cooldown indicator
+            const originalText = btn.innerHTML;
+            let countdown = Math.ceil(duration / 1000);
+            
+            const updateCountdown = () => {
+                if (countdown > 0) {
+                    btn.innerHTML = originalText.replace(/\d+ Misi Tersedia/, `Cooldown: ${countdown}s`);
+                    countdown--;
+                    setTimeout(updateCountdown, 1000);
+                } else {
+                    // Re-enable button
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    btn.disabled = false;
+                    locationCooldowns[location] = false;
+                }
+            };
+            
+            updateCountdown();
+        }
+
+        // Event Listeners with cooldown
         schoolBtn.addEventListener('click', () => {
+            if (locationCooldowns.school) return;
+            
             soundSystem.play('click');
             showScenario('school', Math.floor(Math.random() * scenarios.school.length));
+            setLocationCooldown('school');
         });
         
         playgroundBtn.addEventListener('click', () => {
+            if (locationCooldowns.playground) return;
+            
             soundSystem.play('click');
-            showScenario('playground', 0);
+            showScenario('playground', Math.floor(Math.random() * scenarios.playground.length));
+            setLocationCooldown('playground');
         });
         
         classroomBtn.addEventListener('click', () => {
+            if (locationCooldowns.classroom) return;
+            
             soundSystem.play('click');
-            showScenario('classroom', 0);
+            showScenario('classroom', Math.floor(Math.random() * scenarios.classroom.length));
+            setLocationCooldown('classroom');
         });
 
         document.getElementById('closeLevelUp').addEventListener('click', () => {
@@ -1126,6 +2243,22 @@
             levelUpPanel.classList.remove('bounce-in');
             updateUI();
         });
+
+        // Info Panel Functions
+        function showInfoPanel() {
+            document.getElementById('infoPanel').classList.remove('hidden');
+            soundSystem.play('click');
+        }
+
+        function hideInfoPanel() {
+            document.getElementById('infoPanel').classList.add('hidden');
+            soundSystem.play('click');
+        }
+
+        // Info Panel Event Listeners
+        document.getElementById('infoBtn').addEventListener('click', showInfoPanel);
+        document.getElementById('infoBtnDesktop').addEventListener('click', showInfoPanel);
+        document.getElementById('closeInfoPanel').addEventListener('click', hideInfoPanel);
 
         // Save System Event Listeners
         document.getElementById('saveMenuBtn').addEventListener('click', showSaveMenu);
@@ -1160,8 +2293,15 @@
             saveSystem.resetGame();
         });
 
+        // Math Mode Event Listeners
+        document.getElementById('mathTutorBtn').addEventListener('click', () => {
+            soundSystem.play('click');
+            showMathTutoring();
+        });
+
         // Add hover sounds to location buttons
-        [schoolBtn, playgroundBtn, classroomBtn].forEach(btn => {
+        const mathTutorBtn = document.getElementById('mathTutorBtn');
+        [schoolBtn, playgroundBtn, classroomBtn, mathTutorBtn].forEach(btn => {
             btn.addEventListener('mouseenter', () => {
                 soundSystem.play('click');
             });
@@ -1176,18 +2316,16 @@
         // Play Time Tracking
         let playTimeStart = Date.now();
         setInterval(() => {
-            gameState.totalPlayTime += 1; // Add 1 second
+            gameState.totalPlayTime += 1;
         }, 1000);
 
         // Load saved game on startup
         if (saveSystem.loadGame()) {
             updateUI();
-            updateMissionUI();
         }
 
         // Initialize game
         updateUI();
-        updateMissionUI();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a67ec7c0093e59',t:'MTc1NDM5OTAxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a6ec3850fc87a8',t:'MTc1NDQwMzQ5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
