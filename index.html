@@ -774,84 +774,85 @@
             basic: [
                 {
                     question: "Berapakah hasil dari 15 + 28?",
-                    options: ["43", "42", "44", "41"],
-                    correct: 0,
+                    options: ["42", "43", "41", "44"], // benar: 43 di index 1
+                    correct: 1,
                     explanation: "15 + 28 = 43. Kita bisa menghitung dengan cara: 15 + 20 = 35, lalu 35 + 8 = 43."
                 },
                 {
                     question: "Hasil dari 84 - 37 adalah...",
-                    options: ["47", "46", "48", "49"],
-                    correct: 0,
+                    options: ["46", "48", "49", "47"], // benar: 47 di index 3
+                    correct: 3,
                     explanation: "84 - 37 = 47. Cara mudah: 84 - 30 = 54, lalu 54 - 7 = 47."
                 },
                 {
                     question: "Berapakah 12 × 8?",
-                    options: ["96", "94", "98", "92"],
-                    correct: 0,
+                    options: ["94", "96", "92", "98"], // benar: 96 di index 1
+                    correct: 1,
                     explanation: "12 × 8 = 96. Bisa dihitung: 12 × 8 = (10 × 8) + (2 × 8) = 80 + 16 = 96."
                 }
             ],
             algebra: [
                 {
                     question: "Jika x + 5 = 12, maka nilai x adalah...",
-                    options: ["7", "6", "8", "5"],
-                    correct: 0,
+                    options: ["5", "6", "7", "8"], // benar: 7 di index 2
+                    correct: 2,
                     explanation: "x + 5 = 12, maka x = 12 - 5 = 7. Kita pindahkan 5 ke ruas kanan."
                 },
                 {
                     question: "Hasil dari 3x + 2x adalah...",
-                    options: ["5x", "6x", "5x²", "6"],
-                    correct: 0,
+                    options: ["5x²", "5x", "6", "6x"], // benar: 5x di index 1
+                    correct: 1,
                     explanation: "3x + 2x = (3 + 2)x = 5x. Kita jumlahkan koefisiennya."
                 },
                 {
                     question: "Jika 2y - 3 = 9, maka y = ...",
-                    options: ["6", "5", "7", "4"],
-                    correct: 0,
+                    options: ["4", "5", "6", "7"], // benar: 6 di index 2
+                    correct: 2,
                     explanation: "2y - 3 = 9, maka 2y = 9 + 3 = 12, jadi y = 12 ÷ 2 = 6."
                 }
             ],
             geometry: [
                 {
                     question: "Luas persegi dengan sisi 8 cm adalah...",
-                    options: ["64 cm²", "32 cm²", "16 cm²", "24 cm²"],
-                    correct: 0,
+                    options: ["16 cm²", "64 cm²", "32 cm²", "24 cm²"], // benar: 64 cm² di index 1
+                    correct: 1,
                     explanation: "Luas persegi = sisi × sisi = 8 × 8 = 64 cm²."
                 },
                 {
                     question: "Keliling lingkaran dengan jari-jari 7 cm adalah... (π = 22/7)",
-                    options: ["44 cm", "22 cm", "88 cm", "14 cm"],
-                    correct: 0,
+                    options: ["14 cm", "88 cm", "22 cm", "44 cm"], // benar: 44 cm di index 3
+                    correct: 3,
                     explanation: "Keliling = 2πr = 2 × (22/7) × 7 = 2 × 22 = 44 cm."
                 },
                 {
                     question: "Luas segitiga dengan alas 10 cm dan tinggi 6 cm adalah...",
-                    options: ["30 cm²", "60 cm²", "16 cm²", "20 cm²"],
-                    correct: 0,
+                    options: ["20 cm²", "30 cm²", "60 cm²", "16 cm²"], // benar: 30 cm² di index 1
+                    correct: 1,
                     explanation: "Luas segitiga = ½ × alas × tinggi = ½ × 10 × 6 = 30 cm²."
                 }
             ],
             advanced: [
                 {
                     question: "Jika a² + b² = 25 dan a = 3, maka b = ...",
-                    options: ["4", "5", "3", "6"],
+                    options: ["4", "5", "6", "3"], // benar: 4 di index 0
                     correct: 0,
                     explanation: "a² + b² = 25, jika a = 3, maka 9 + b² = 25, sehingga b² = 16, jadi b = 4."
                 },
                 {
                     question: "Hasil dari (x + 3)(x - 2) adalah...",
-                    options: ["x² + x - 6", "x² - x - 6", "x² + x + 6", "x² - x + 6"],
-                    correct: 0,
+                    options: ["x² + x + 6", "x² - x - 6", "x² + x - 6", "x² - x + 6"], // benar: x² + x - 6 di index 2
+                    correct: 2,
                     explanation: "(x + 3)(x - 2) = x² - 2x + 3x - 6 = x² + x - 6."
                 },
                 {
                     question: "Jika f(x) = 2x + 1, maka f(5) = ...",
-                    options: ["11", "10", "12", "9"],
-                    correct: 0,
+                    options: ["12", "11", "9", "10"], // benar: 11 di index 1
+                    correct: 1,
                     explanation: "f(5) = 2(5) + 1 = 10 + 1 = 11."
                 }
             ]
         };
+
 
         // Expanded Game Scenarios
         const scenarios = {
@@ -1495,7 +1496,7 @@
                 actionPanel.classList.remove('hidden');
                 actionPanel.classList.add('slide-in-up');
                 
-                actionButtons.innerHTML = shuffleArray(problem.options).map((option, index) => `
+                actionButtons.innerHTML = problem.options.map((option, index) => `
                     <button class="math-option bg-gradient-to-b from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-4 px-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 active:scale-95" 
                             data-index="${index}" data-correct="${index === problem.correct}"
                             style="animation-delay: ${index * 0.1}s">
