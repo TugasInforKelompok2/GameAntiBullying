@@ -1912,8 +1912,8 @@
             const actionType = btn.dataset.action;
             const points = parseInt(btn.dataset.points);
             const isCorrect = btn.dataset.correct === 'true';
-            
             soundSystem.play(isCorrect ? 'success' : 'error');
+            actionPanel.classList.add('hidden');
             
             btn.classList.add(isCorrect ? 'bounce-in' : 'shake');
             
