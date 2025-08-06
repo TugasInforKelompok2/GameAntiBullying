@@ -791,6 +791,18 @@
                     options: ["94", "96", "92", "98"], // benar: 96 di index 1
                     correct: 1,
                     explanation: "12 × 8 = 96. Bisa dihitung: 12 × 8 = (10 × 8) + (2 × 8) = 80 + 16 = 96."
+                },
+                {
+                  question: "Berapa hasil dari 50 + 25?",
+                  options: ["75", "70", "65", "80"],
+                  correct: 0,
+                  explanation: "50 + 25 = 75."
+                },
+                {
+                  question: "Hasil dari 100 - 45 adalah...",
+                  options: ["55", "60", "50", "65"],
+                  correct: 0,
+                  explanation: "100 - 45 = 55."
                 }
             ],
             algebra: [
@@ -811,6 +823,18 @@
                     options: ["4", "5", "6", "7"], // benar: 6 di index 2
                     correct: 2,
                     explanation: "2y - 3 = 9, maka 2y = 9 + 3 = 12, jadi y = 12 ÷ 2 = 6."
+                },
+                {
+                  question: "Jika x ÷ 4 = 5, maka x adalah...",
+                  options: ["10", "15", "20", "25"],
+                  correct: 2,
+                  explanation: "x = 5 × 4 = 20."
+                },
+                {
+                  question: "Jika 3x = 2x + 5, maka x = ...",
+                  options: ["2", "3", "4", "5"],
+                  correct: 3,
+                  explanation: "3x - 2x = 5 → x = 5."
                 }
             ],
             geometry: [
@@ -831,6 +855,18 @@
                     options: ["20 cm²", "30 cm²", "60 cm²", "16 cm²"], // benar: 30 cm² di index 1
                     correct: 1,
                     explanation: "Luas segitiga = ½ × alas × tinggi = ½ × 10 × 6 = 30 cm²."
+                },
+                {
+                  question: "Luas lingkaran dengan jari-jari 7 cm (π = 22/7) adalah...",
+                  options: ["144 cm²", "154 cm²", "164 cm²", "140 cm²"],
+                  correct: 1,
+                  explanation: "Luas = π × r² = 22/7 × 7 × 7 = 154 cm²."
+                },
+                {
+                  question: "Keliling segitiga dengan sisi 5 cm, 6 cm, dan 7 cm adalah...",
+                  options: ["17 cm", "18 cm", "19 cm", "20 cm"],
+                  correct: 2,
+                  explanation: "5 + 6 + 7 = 18 cm."
                 }
             ],
             advanced: [
@@ -851,6 +887,30 @@
                     options: ["12", "11", "9", "10"], // benar: 11 di index 1
                     correct: 1,
                     explanation: "f(5) = 2(5) + 1 = 10 + 1 = 11."
+                },
+                {
+                  question: "Jika f(x) = x² + 2x, maka f(3) = ...",
+                  options: ["9", "11", "15", "21"],
+                  correct: 2,
+                  explanation: "f(3) = 3² + 2×3 = 9 + 6 = 15."
+                },
+                {
+                  question: "Jika 2a + 3 = 9, maka nilai a adalah...",
+                  options: ["2", "3", "4", "5"],
+                  correct: 1,
+                  explanation: "2a = 6 → a = 3."
+                },
+                {
+                    question: "Jika a² = 49, maka a = ...",
+                    options: ["6", "7", "8", "9"],
+                    correct: 1,
+                    explanation: "√49 = 7."
+                },
+                {
+                    question: "Jika f(x) = x² - 2x, maka f(4) = ...",
+                    options: ["8", "12", "16", "24"],
+                    correct: 0,
+                    explanation: "4² - 2×4 = 16 - 8 = 8."
                 }
             ]
         };
@@ -990,6 +1050,34 @@
                         { text: "Suruh Belajar Sendiri", type: "ignore", points: -10, correct: false },
                         { text: "Panggil Guru", type: "help", points: 15, correct: true }
                     ]
+                },
+                {
+                  title: "Tugas Mendadak",
+                  description: "Guru memberi tugas mendadak dan banyak teman panik.",
+                  characters: [
+                    { emoji: "😓", name: "Teman Panik", dialogue: "Aku nggak ngerti tugasnya!" },
+                    { emoji: "😌", name: "KAMU", dialogue: "Tenang, ayo kita kerjakan bareng!" }
+                  ],
+                  actions: [
+                    { text: "Bentuk Grup Belajar", type: "organize", points: 25, correct: true },
+                    { text: "Ajari Teman", type: "teach", points: 20, correct: true },
+                    { text: "Abaikan Tugas", type: "ignore", points: -10, correct: false },
+                    { text: "Salin Jawaban Teman", type: "cheat", points: -20, correct: false }
+                  ]
+                },
+                {
+                    title: "Teman Terlambat",
+                    description: "Temanmu datang terlambat dan tidak tahu pelajaran apa yang sedang berlangsung.",
+                    characters: [
+                        { emoji: "😰", name: "Teman Terlambat", dialogue: "Aku ketinggalan pelajaran..." },
+                        { emoji: "📚", name: "KAMU", dialogue: "Aku bisa bantu jelaskan!" }
+                    ],
+                    actions: [
+                        { text: "Beri Ringkasan Pelajaran", type: "teach", points: 25, correct: true },
+                        { text: "Pinjamkan Catatan", type: "support", points: 20, correct: true },
+                        { text: "Biarkan Dia Bingung", type: "ignore", points: -10, correct: false },
+                        { text: "Minta Guru Ulangi", type: "advocate", points: 15, correct: true }
+                    ]
                 }
             ],
             playground: [
@@ -1081,9 +1169,52 @@
                         { text: "Ikut Mengejek", type: "bully", points: -25, correct: false },
                         { text: "Panggil Guru", type: "report", points: 20, correct: true }
                     ]
+                },
+                {
+                  title: "Mainan Baru",
+                  description: "Seseorang membawa mainan baru dan semua ingin mencoba.",
+                  characters: [
+                    { emoji: "🧸", name: "Mainan Baru", dialogue: "Aku ingin semua mencoba..." },
+                    { emoji: "😅", name: "KAMU", dialogue: "Harus adil bagi semua!" }
+                  ],
+                  actions: [
+                    { text: "Atur Giliran", type: "organize", points: 30, correct: true },
+                    { text: "Main Sendiri", type: "selfish", points: -10, correct: false },
+                    { text: "Minta Sumbangan Mainan", type: "advocate", points: 20, correct: true },
+                    { text: "Gosok Mainan Terus", type: "bully", points: -20, correct: false }
+                  ]
+                },
+                {
+                    title: "Anak Kesepian di Ayunan",
+                    description: "Seorang anak duduk sendirian di ayunan sambil menunduk.",
+                    characters: [
+                        { emoji: "😞", name: "Anak Sendirian", dialogue: "Aku tidak punya teman main..." },
+                        { emoji: "🙂", name: "KAMU", dialogue: "Aku bisa ajak dia bermain!" }
+                    ],
+                    actions: [
+                        { text: "Ajak Bermain", type: "include", points: 30, correct: true },
+                        { text: "Beri Senyuman", type: "encourage", points: 15, correct: true },
+                        { text: "Pergi Saja", type: "ignore", points: -10, correct: false },
+                        { text: "Ajak Teman Lain Juga", type: "organize", points: 25, correct: true }
+                    ]
                 }
             ],
             classroom: [
+                {
+                  title: "Teman Dipermalukan",
+                  description: "Seseorang menertawakan teman yang salah menjawab di kelas.",
+                  characters: [
+                    { emoji: "😢", name: "Korban", dialogue: "Aku malu banget..." },
+                    { emoji: "😠", name: "Penertawa", dialogue: "Wkwkwk salah banget jawabnya!" },
+                    { emoji: "😐", name: "KAMU", dialogue: "Itu tidak sopan!" }
+                  ],
+                  actions: [
+                    { text: "Bela Teman", type: "defend", points: 30, correct: true },
+                    { text: "Tegur Penertawa", type: "advocate", points: 25, correct: true },
+                    { text: "Ikut Tertawa", type: "mock", points: -15, correct: false },
+                    { text: "Pura-Pura Tidak Lihat", type: "ignore", points: -5, correct: false }
+                  ]
+                },
                 {
                     title: "Teman Kesulitan Belajar",
                     description: "Temanmu tidak mengerti pelajaran matematika dan terlihat frustasi.",
@@ -1184,6 +1315,20 @@
                         { text: "Edukasi Tentang Inklusi", type: "teach", points: 35, correct: true },
                         { text: "Jadi Teman Baik", type: "befriend", points: 30, correct: true },
                         { text: "Ikut Mengejek", type: "bully", points: -40, correct: false }
+                    ]
+                },
+                {
+                    title: "Teman Tidak Punya Alat Tulis",
+                    description: "Temanmu lupa membawa alat tulis dan panik saat akan ujian.",
+                    characters: [
+                        { emoji: "😨", name: "Teman Panik", dialogue: "Aku lupa bawa pensil!" },
+                        { emoji: "✏️", name: "KAMU", dialogue: "Tenang, aku bisa bantu." }
+                    ],
+                    actions: [
+                        { text: "Pinjamkan Pensil", type: "support", points: 20, correct: true },
+                        { text: "Tawarkan Pulpen", type: "help", points: 15, correct: true },
+                        { text: "Abaikan", type: "ignore", points: -5, correct: false },
+                        { text: "Minta ke Guru", type: "advocate", points: 10, correct: true }
                     ]
                 }
             ]
