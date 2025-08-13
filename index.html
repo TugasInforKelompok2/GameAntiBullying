@@ -11,6 +11,11 @@
         body { 
             font-family: 'Poppins', sans-serif; 
             scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         .orbitron { font-family: 'Orbitron', monospace; }
         
@@ -382,6 +387,43 @@
             display: none;
         }
         
+        /* Scrollbar hiding for mobile stats */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Mobile touch improvements */
+        @media (max-width: 767px) {
+            .choice-button, .location-btn, .letter-button {
+                min-height: 44px; /* iOS recommended touch target size */
+                touch-action: manipulation; /* Prevent zoom on double tap */
+            }
+            
+            .panel-transition {
+                transition: all 0.2s ease; /* Faster transitions on mobile */
+            }
+            
+            /* Improve text readability on small screens */
+            .text-xs {
+                font-size: 0.75rem;
+                line-height: 1.2;
+            }
+            
+            /* Better spacing for mobile */
+            .gap-1 {
+                gap: 0.375rem;
+            }
+            
+            .gap-2 {
+                gap: 0.625rem;
+            }
+        }
+        
         /* Responsive adjustments */
         @media (min-width: 768px) {
             .mobile-map-trigger {
@@ -396,6 +438,25 @@
         @media (max-width: 767px) {
             #locationPanel {
                 display: none;
+            }
+        }
+        
+        /* Tablet optimizations */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        
+        /* Large screen optimizations */
+        @media (min-width: 1024px) {
+            .max-w-7xl {
+                max-width: 80rem;
             }
         }
 
@@ -643,42 +704,85 @@
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-70 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-purple-500/30">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 ml-16 md:ml-20">
-                <h1 class="orbitron text-2xl md:text-3xl font-bold neon-text">🌟 Hero Kebaikan</h1>
-                <div class="flex flex-wrap gap-2 md:gap-4 text-xs md:text-sm">
-                    <div class="bg-purple-900/50 px-2 md:px-3 py-1 rounded-full border border-purple-400/30">
-                        Level: <span id="playerLevel" class="font-bold text-cyan-300">1</span>
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-purple-500/30 shadow-lg">
+        <div class="container mx-auto px-2 sm:px-4 py-2 sm:py-3">
+            <!-- Mobile Header Layout -->
+            <div class="flex md:hidden justify-between items-center ml-14">
+                <h1 class="orbitron text-lg font-bold neon-text truncate">🌟 Hero Kebaikan</h1>
+                <div class="flex items-center gap-1">
+                    <button onclick="showTutorial()" class="bg-yellow-600/50 hover:bg-yellow-500/60 p-2 rounded-full border border-yellow-400/30 panel-transition" title="Tutorial">
+                        📖
+                    </button>
+                    <button onclick="showGameInfo()" class="bg-purple-600/50 hover:bg-purple-500/60 p-2 rounded-full border border-purple-400/30 panel-transition" title="Info Game">
+                        ℹ️
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Stats Row with Horizontal Scroll -->
+            <div class="flex md:hidden mt-2 ml-14 mr-2">
+                <div class="flex gap-2 text-xs overflow-x-auto scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <div class="bg-purple-900/60 px-3 py-1.5 rounded-full border border-purple-400/30 text-center whitespace-nowrap flex-shrink-0">
+                        <span class="text-purple-300">Level</span> <span id="playerLevel" class="font-bold text-cyan-300">1</span>
                     </div>
-                    <div class="bg-purple-900/50 px-2 md:px-3 py-1 rounded-full border border-purple-400/30">
-                        Poin Kebaikan: <span id="kindnessPoints" class="font-bold text-green-300">0</span>
+                    <div class="bg-green-900/60 px-3 py-1.5 rounded-full border border-green-400/30 text-center whitespace-nowrap flex-shrink-0">
+                        <span class="text-green-300">Kebaikan</span> <span id="kindnessPoints" class="font-bold text-green-300">0</span>
                     </div>
-                    <div class="bg-purple-900/50 px-2 md:px-3 py-1 rounded-full border border-purple-400/30">
-                        Level Kepintaran: <span id="smartLevel" class="font-bold text-blue-300">1</span>
+                    <div class="bg-blue-900/60 px-3 py-1.5 rounded-full border border-blue-400/30 text-center whitespace-nowrap flex-shrink-0">
+                        <span class="text-blue-300">Kepintaran</span> <span id="smartLevel" class="font-bold text-blue-300">1</span>
                     </div>
-                    <div class="bg-purple-900/50 px-2 md:px-3 py-1 rounded-full border border-purple-400/30">
-                        Poin Matematika: <span id="mathPoints" class="font-bold text-yellow-300">0</span>
+                    <div class="bg-yellow-900/60 px-3 py-1.5 rounded-full border border-yellow-400/30 text-center whitespace-nowrap flex-shrink-0">
+                        <span class="text-yellow-300">Matematika</span> <span id="mathPoints" class="font-bold text-yellow-300">0</span>
                     </div>
-                    <div class="flex gap-1">
-                        <button onclick="saveGameManual()" class="bg-green-600/50 hover:bg-green-500/60 px-2 md:px-3 py-1 rounded-full border border-green-400/30 panel-transition" title="Simpan Game Manual">
+                    <div class="bg-orange-900/60 px-3 py-1.5 rounded-full border border-orange-400/30 text-center whitespace-nowrap flex-shrink-0">
+                        <span class="text-orange-300">Misi</span> <span id="completedMissionsMobile" class="font-bold text-orange-300">0</span>
+                    </div>
+                    <div class="bg-pink-900/60 px-3 py-1.5 rounded-full border border-pink-400/30 text-center whitespace-nowrap flex-shrink-0">
+                        <span class="text-pink-300">Items</span> <span id="collectibleCountMobile" class="font-bold text-pink-300">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desktop Header Layout -->
+            <div class="hidden md:flex justify-between items-center ml-20">
+                <h1 class="orbitron text-2xl lg:text-3xl font-bold neon-text">🌟 Hero Kebaikan</h1>
+                <div class="flex items-center gap-3 lg:gap-4">
+                    <!-- Stats Section -->
+                    <div class="flex flex-wrap gap-2 lg:gap-3 text-sm">
+                        <div class="bg-purple-900/50 px-3 py-1.5 rounded-full border border-purple-400/30 whitespace-nowrap">
+                            Level: <span id="playerLevelDesktop" class="font-bold text-cyan-300">1</span>
+                        </div>
+                        <div class="bg-green-900/50 px-3 py-1.5 rounded-full border border-green-400/30 whitespace-nowrap">
+                            Kebaikan: <span id="kindnessPointsDesktop" class="font-bold text-green-300">0</span>
+                        </div>
+                        <div class="bg-blue-900/50 px-3 py-1.5 rounded-full border border-blue-400/30 whitespace-nowrap">
+                            Kepintaran: <span id="smartLevelDesktop" class="font-bold text-blue-300">1</span>
+                        </div>
+                        <div class="bg-yellow-900/50 px-3 py-1.5 rounded-full border border-yellow-400/30 whitespace-nowrap">
+                            Matematika: <span id="mathPointsDesktop" class="font-bold text-yellow-300">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-1 lg:gap-2">
+                        <button onclick="saveGameManual()" class="bg-green-600/50 hover:bg-green-500/60 p-2 rounded-full border border-green-400/30 panel-transition" title="Simpan Game Manual">
                             💾
                         </button>
-                        <button onclick="loadGameManual()" class="bg-cyan-600/50 hover:bg-cyan-500/60 px-2 md:px-3 py-1 rounded-full border border-cyan-400/30 panel-transition" title="Muat Game Manual">
+                        <button onclick="loadGameManual()" class="bg-cyan-600/50 hover:bg-cyan-500/60 p-2 rounded-full border border-cyan-400/30 panel-transition" title="Muat Game Manual">
                             📂
                         </button>
-                        <button onclick="resetGame()" class="bg-red-600/50 hover:bg-red-500/60 px-2 md:px-3 py-1 rounded-full border border-red-400/30 panel-transition" title="Reset Game">
+                        <button onclick="resetGame()" class="bg-red-600/50 hover:bg-red-500/60 p-2 rounded-full border border-red-400/30 panel-transition" title="Reset Game">
                             🔄
                         </button>
-                        <button onclick="showTutorial()" class="bg-yellow-600/50 hover:bg-yellow-500/60 px-2 md:px-3 py-1 rounded-full border border-yellow-400/30 panel-transition" title="Tutorial">
+                        <button onclick="showTutorial()" class="bg-yellow-600/50 hover:bg-yellow-500/60 p-2 rounded-full border border-yellow-400/30 panel-transition" title="Tutorial">
                             📖
                         </button>
-                        <button onclick="showGameInfo()" class="bg-purple-600/50 hover:bg-purple-500/60 px-2 md:px-3 py-1 rounded-full border border-purple-400/30 panel-transition" title="Info Game">
+                        <button onclick="showGameInfo()" class="bg-purple-600/50 hover:bg-purple-500/60 p-2 rounded-full border border-purple-400/30 panel-transition" title="Info Game">
                             ℹ️
                         </button>
-                        <div class="bg-blue-600/50 px-2 md:px-3 py-1 rounded-full border border-blue-400/30 flex items-center" title="Auto-save timer">
+                        <div class="bg-blue-600/50 px-3 py-2 rounded-full border border-blue-400/30 flex items-center" title="Auto-save timer">
                             <span id="autoSaveIndicator" class="text-xs">🔄</span>
-                            <span id="autoSaveTimer" class="hidden md:inline text-xs ml-1">30s</span>
+                            <span id="autoSaveTimer" class="text-xs ml-1">30s</span>
                         </div>
                     </div>
                 </div>
@@ -710,22 +814,22 @@
     </div>
 
     <!-- Main Content -->
-    <main class="pt-28 md:pt-24 pb-8 px-2 md:px-4">
+    <main class="pt-24 sm:pt-28 md:pt-24 lg:pt-28 pb-8 px-2 md:px-4">
         <div class="container mx-auto max-w-7xl">
             <!-- Location Map (Desktop Only) -->
-            <div id="locationPanel" class="mb-6 md:mb-8 fade-slide-in">
-                <h2 class="orbitron text-lg md:text-xl font-bold mb-4 text-center neon-text">🗺️ Peta Lokasi</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4" id="locationGrid">
+            <div id="locationPanel" class="mb-4 sm:mb-6 md:mb-8 fade-slide-in">
+                <h2 class="orbitron text-lg md:text-xl font-bold mb-3 sm:mb-4 text-center neon-text">🗺️ Peta Lokasi</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4" id="locationGrid">
                     <!-- Locations will be dynamically generated -->
                 </div>
-                <div class="mt-4 text-center" id="miniGameButton">
+                <div class="mt-3 sm:mt-4 text-center" id="miniGameButton">
                     <!-- Mini game button will be dynamically generated -->
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
                 <!-- Combined Scenario & Math Panel -->
-                <div id="scenarioHeroPanel" class="scenario-panel lg:col-span-2 bg-black/40 backdrop-blur-md rounded-2xl border border-purple-400/30 p-4 md:p-6 panel-transition fade-slide-in">
+                <div id="scenarioHeroPanel" class="scenario-panel lg:col-span-2 bg-black/40 backdrop-blur-md rounded-xl sm:rounded-2xl border border-purple-400/30 p-3 sm:p-4 md:p-6 panel-transition fade-slide-in">
                     <!-- Lock Button -->
                     <button id="panelLockButton" onclick="togglePanelLock()" class="lock-button" title="Kunci Panel">
                         🔓
@@ -873,7 +977,7 @@
                 </div>
 
                 <!-- Daily Missions & Features Panel -->
-                <div id="featuresPanel" class="bg-black/40 backdrop-blur-md rounded-2xl border border-purple-400/30 p-4 md:p-6 panel-transition fade-slide-in">
+                <div id="featuresPanel" class="bg-black/40 backdrop-blur-md rounded-xl sm:rounded-2xl border border-purple-400/30 p-3 sm:p-4 md:p-6 panel-transition fade-slide-in">
                     <!-- Daily Missions -->
                     <div class="mb-6">
                         <div class="flex justify-between items-center mb-3">
@@ -912,8 +1016,8 @@
     </main>
 
     <!-- Tutorial Modal -->
-    <div id="tutorialModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 md:p-4">
-        <div class="modal-content bg-gradient-to-br from-purple-900/90 to-indigo-900/90 backdrop-blur-md rounded-xl md:rounded-2xl border border-purple-400/30 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
+    <div id="tutorialModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="modal-content bg-gradient-to-br from-purple-900/90 to-indigo-900/90 backdrop-blur-md rounded-lg sm:rounded-xl md:rounded-2xl border border-purple-400/30 max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
             <div class="p-3 md:p-6">
                 <div class="flex justify-between items-center mb-3 md:mb-6">
                     <h2 class="orbitron text-lg md:text-2xl font-bold neon-text">📖 Tutorial Hero Kebaikan</h2>
@@ -4139,10 +4243,31 @@
 
         // Update UI elements
         function updateUI() {
+            // Mobile header elements
             document.getElementById('playerLevel').textContent = gameState.playerLevel;
             document.getElementById('kindnessPoints').textContent = gameState.kindnessPoints;
             document.getElementById('smartLevel').textContent = gameState.smartLevel;
             document.getElementById('mathPoints').textContent = gameState.mathPoints;
+            
+            // Desktop header elements
+            const playerLevelDesktop = document.getElementById('playerLevelDesktop');
+            const kindnessPointsDesktop = document.getElementById('kindnessPointsDesktop');
+            const smartLevelDesktop = document.getElementById('smartLevelDesktop');
+            const mathPointsDesktop = document.getElementById('mathPointsDesktop');
+            
+            if (playerLevelDesktop) playerLevelDesktop.textContent = gameState.playerLevel;
+            if (kindnessPointsDesktop) kindnessPointsDesktop.textContent = gameState.kindnessPoints;
+            if (smartLevelDesktop) smartLevelDesktop.textContent = gameState.smartLevel;
+            if (mathPointsDesktop) mathPointsDesktop.textContent = gameState.mathPoints;
+            
+            // Mobile additional stats
+            const completedMissionsMobile = document.getElementById('completedMissionsMobile');
+            const collectibleCountMobile = document.getElementById('collectibleCountMobile');
+            
+            if (completedMissionsMobile) completedMissionsMobile.textContent = gameState.completedMissions;
+            if (collectibleCountMobile) collectibleCountMobile.textContent = gameState.collectibles.length;
+            
+            // Hero panel elements
             document.getElementById('heroLevel').textContent = gameState.playerLevel;
             document.getElementById('heroKindness').textContent = gameState.kindnessPoints;
             document.getElementById('heroSmart').textContent = gameState.smartLevel;
@@ -5217,5 +5342,5 @@
             checkFirstTimePlayer();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96e868b1f3543e02',t:'MTc1NTA5MDE2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96e899ef4007fd65',t:'MTc1NTA5MjE4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
