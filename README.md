@@ -1,52 +1,80 @@
-# GameAntiBullying
-🚀🎮 Pahlawan Sekolah: Misi Anti-Bullying 💥💬
-"Game interaktif penuh aksi dan empati! Lawan bullying, bantu teman, jadilah pahlawan!"
+<!-- Banner / Logo -->
+<p align="center">
+  <img src="assets/banner.png" alt="Pahlawan Sekolah" width="80%">
+</p>
 
-<!-- Ganti dengan gambar preview game kamu -->
+<h1 align="center">🚀🎮 Pahlawan Sekolah: Misi Anti-Bullying 💥💬</h1>
+<p align="center"><b>Game interaktif penuh aksi dan empati! Lawan bullying, bantu teman, jadilah pahlawan di sekolahmu!</b></p>
 
-🔥 Tentang Game Ini
-Pahlawan Sekolah adalah game edukasi bertema anti-bullying dengan visual bergaya kartun, warna cerah, dan gameplay seru berbasis pilihan aksi! Cocok untuk anak-anak, remaja, guru, bahkan developer yang ingin gabung dalam gerakan Stop Bullying! 🚫👊
+---
 
-Kamu akan berperan sebagai siswa yang punya misi penting:
-🎯 Membantu teman, melawan bullying, dan menyebarkan kebaikan!
+## 📊 Status & Badge
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Engine](https://img.shields.io/badge/engine-Godot%2FUnity%2FHTML5-orange)
+![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)
 
-🎮 Fitur-Fitur Seru:
-🏫 Eksplorasi Sekolah (kelas, kantin, taman, lorong)
+---
 
-💬 Pilihan Aksi Nyata: Laporkan, Temani, Beri Semangat!
+## 🔥 Tentang Game Ini
+**Pahlawan Sekolah** adalah game edukasi bertema **anti-bullying** dengan visual bergaya kartun, warna cerah, dan gameplay seru berbasis **pilihan aksi**.  
+Cocok dimainkan oleh **anak-anak, remaja, guru**, bahkan **developer** yang ingin ikut dalam gerakan **Stop Bullying!** 🚫👊
 
-⭐ Level Up Empati: Kumpulkan poin 'Kebaikan'
+🎯 Kamu berperan sebagai **siswa** dengan misi penting:  
+> Membantu teman, melawan bullying, dan menyebarkan kebaikan di sekolah.
 
-🧠 Mini Game Edukatif: Tebak emosi, bantu karakter
+---
 
-🎨 Visual Kartun Full Color: Gaya fun dan ramah anak
+## 🎮 Fitur-Fitur Seru
+| Fitur | Deskripsi |
+|-------|-----------|
+| 🏫 Eksplorasi Sekolah | Jelajahi kelas, kantin, taman, dan lorong sekolah |
+| 💬 Pilihan Aksi Nyata | Laporkan pelaku, temani korban, atau beri semangat |
+| ⭐ Level Up Empati | Kumpulkan poin *Kebaikan* dan naikkan reputasi |
+| 🧠 Mini Game Edukatif | Tebak emosi, pecahkan teka-teki, bantu karakter |
+| 🎨 Visual Kartun Full Color | Gaya fun, ekspresif, ramah anak |
 
-🧩 Genre & Teknologi
-👦👧 Edukasi Interaktif + RPG ringan
+---
 
-💻 Dibuat dengan: Godot / Unity / HTML5 / Scratch (pilih sesuai engine kamu)
+## 🧩 Genre & Teknologi
+- **Genre**: Edukasi Interaktif + RPG Ringan  
+- **Engine**: Godot / Unity / HTML5 / Scratch *(sesuaikan)*  
+- **Visual**: Kartun lucu, penuh ekspresi, warna cerah  
 
-🎨 Style: Kartun lucu, penuh ekspresi, warna-warna cerah
+---
 
-📸 Cuplikan Gameplay
-<!-- Tambahkan screenshot dari game -->
+## 📸 Cuplikan Gameplay
+> *(Tambahkan screenshot atau gif gameplay di sini)*
 
-💡 Kenapa Game Ini Dibuat?
-Karena bullying itu nyata, dan banyak anak nggak tahu harus ngapain. Lewat game ini, pemain diajak untuk:
+<p align="center">
+  <img src="assets/screenshot1.png" alt="Gameplay 1" width="45%">
+  <img src="assets/screenshot2.png" alt="Gameplay 2" width="45%">
+</p>
 
-Belajar empati
+---
 
-Melatih keberanian sosial
+## 💡 Kenapa Game Ini Dibuat?
+Bullying itu nyata, dan banyak anak tidak tahu bagaimana harus bereaksi.  
+Lewat game ini, pemain diajak untuk:
+- 🤝 **Belajar empati**
+- 💪 **Melatih keberanian sosial**
+- ✅ **Mengambil sikap yang benar**
 
-Mengambil sikap yang benar
+---
 
-👨‍💻 Kontribusi Terbuka!
-Mau bantu? Kamu bisa ikut:
+## 👨‍💻 Kontribusi Terbuka!
+Kami membuka kontribusi dari siapa saja:
+- 🔧 Tambah **level** / **misi baru**
+- 🎨 Desain **karakter** atau **item**
+- 🌍 Terjemahan ke **bahasa lain**
+- 📢 Sebarkan pesan **anti-bullying**
 
-🔧 Menambah level / misi baru
+📬 **Hubungi kami** untuk bergabung sebagai kontributor.
 
-🎨 Mendesain karakter atau item
+---
 
-🌍 Menerjemahkan ke bahasa lain
+## 📜 Lisensi
+Proyek ini dirilis di bawah lisensi **MIT**.  
+Bebas digunakan, dimodifikasi, dan dikembangkan untuk tujuan positif.
 
-📢 Menyebarkan pesan anti-bullying!
+---
