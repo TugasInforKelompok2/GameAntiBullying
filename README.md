@@ -1,6 +1,6 @@
 <!-- Banner / Logo -->
 <p align="center">
-  <img src="GitMage/Icon.png" alt="Pahlawan Sekolah" width="80%">
+  <img src="GitMage/Icon.png" alt="Pahlawan Sekolah" width="20%">
 </p>
 
 <h1 align="center">🚀 Hero Kebaikan: Misi Anti-Bullying 💥💬</h1>
@@ -46,9 +46,9 @@ Cocok dimainkan oleh **anak-anak, remaja, guru**, bahkan **developer** yang ingi
 ## 📸 Cuplikan Gameplay
 
 <p align="center">
-  <img src="GitMage/Map.png" alt="Gameplay 1" width="45%">
-  <img src="GitMage/Mission.png" alt="Gameplay 2" width="45%">
-  <img src="GitMage/Question.png" alt="Gameplay 2" width="45%">
+  <img src="GitMage/Map.png" alt="Gameplay 1" width="25%">
+  <img src="GitMage/Mission.png" alt="Gameplay 2" width="25%">
+  <img src="GitMage/Question.png" alt="Gameplay 2" width="35%">
 </p>
 
 ---
