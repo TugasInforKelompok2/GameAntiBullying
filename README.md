@@ -1,9 +1,9 @@
 <!-- Banner / Logo -->
 <p align="center">
-  <img src="assets/banner.png" alt="Pahlawan Sekolah" width="80%">
+  <img src="GitMage/Icon.png" alt="Pahlawan Sekolah" width="80%">
 </p>
 
-<h1 align="center">🚀🎮 Pahlawan Sekolah: Misi Anti-Bullying 💥💬</h1>
+<h1 align="center">🚀 Hero Kebaikan: Misi Anti-Bullying 💥💬</h1>
 <p align="center"><b>Game interaktif penuh aksi dan empati! Lawan bullying, bantu teman, jadilah pahlawan di sekolahmu!</b></p>
 
 ---
@@ -44,11 +44,11 @@ Cocok dimainkan oleh **anak-anak, remaja, guru**, bahkan **developer** yang ingi
 ---
 
 ## 📸 Cuplikan Gameplay
-> *(Tambahkan screenshot atau gif gameplay di sini)*
 
 <p align="center">
-  <img src="assets/screenshot1.png" alt="Gameplay 1" width="45%">
-  <img src="assets/screenshot2.png" alt="Gameplay 2" width="45%">
+  <img src="GitMage/Map.png" alt="Gameplay 1" width="45%">
+  <img src="GitMage/Mission.png" alt="Gameplay 2" width="45%">
+  <img src="GitMage/Question.png" alt="Gameplay 2" width="45%">
 </p>
 
 ---
