@@ -268,6 +268,37 @@
             pointer-events: auto !important;
         }
         
+        /* Z-Index Hierarchy - Complete Layer Management */
+        /* 
+         * Layer Priority (highest to lowest):
+         * 100: Sidebar Toggle Button (always accessible)
+         * 90:  Sidebar Panel (main navigation)
+         * 85:  Sidebar Overlay (mobile backdrop)
+         * 60:  Modals (tutorial, game info, achievements, etc.)
+         * 50:  Panel Lock System
+         * 46:  Mobile Map Trigger
+         * 45:  Mobile Map Popup
+         * 40:  Header
+         * 10:  Regular content
+         */
+        
+        #sidebarToggle {
+            z-index: 100 !important; /* Highest - always clickable and visible */
+        }
+        
+        #sidebar {
+            z-index: 90 !important; /* Sidebar panel - highest content priority */
+        }
+        
+        #sidebarOverlay {
+            z-index: 85 !important; /* Sidebar overlay - above all content */
+        }
+        
+        /* Ensure sidebar is never covered by any other element */
+        .sidebar-open {
+            z-index: 90 !important;
+        }
+        
         /* Responsive sidebar adjustments */
         @media (max-width: 768px) {
             #sidebar {
@@ -280,6 +311,11 @@
             #sidebar {
                 width: 320px;
             }
+        }
+
+        /* Sidebar toggle button positioning */
+        #sidebarToggle {
+            z-index: 75; /* Higher than sidebar overlay */
         }
 
         /* Mobile Map Popup */
@@ -296,6 +332,21 @@
             z-index: 45;
             max-height: 80vh;
             overflow-y: auto;
+        }
+        
+        .mobile-map-popup::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .mobile-map-popup::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+        }
+        
+        .mobile-map-popup::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            border-radius: 6px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
         }
         
         .mobile-map-popup.show {
@@ -402,12 +453,12 @@
     <div class="stars" id="stars"></div>
     
     <!-- Sidebar Toggle Button -->
-    <button id="sidebarToggle" class="fixed top-4 left-4 z-60 bg-gradient-to-r from-purple-600/80 to-indigo-600/80 backdrop-blur-md text-white p-3 rounded-lg border border-purple-400/30 hover:from-purple-500/90 hover:to-indigo-500/90 transition-all duration-300 shadow-lg">
+    <button id="sidebarToggle" class="fixed top-4 left-4 z-90 bg-gradient-to-r from-purple-600/80 to-indigo-600/80 backdrop-blur-md text-white p-3 rounded-lg border border-purple-400/30 hover:from-purple-500/90 hover:to-indigo-500/90 transition-all duration-300 shadow-lg">
         <span id="sidebarToggleIcon" class="text-xl">☰</span>
     </button>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-purple-900/95 to-indigo-900/95 backdrop-blur-md border-r border-purple-400/30 transform -translate-x-full transition-transform duration-300 z-70 overflow-y-auto">
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-purple-900/95 to-indigo-900/95 backdrop-blur-md border-r border-purple-400/30 transform -translate-x-full transition-transform duration-300 z-80 overflow-y-auto">
         <div class="p-6 pt-24">
             <!-- Sidebar Header -->
             <div class="flex items-center justify-between mb-6">
@@ -589,12 +640,12 @@
     </div>
 
     <!-- Sidebar Overlay (Mobile) -->
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-65 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-70 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-purple-500/30">
-        <div class="container mx-auto px-4 py-3 ml-0 md:ml-0">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 ml-16 md:ml-0">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 ml-16 md:ml-20">
                 <h1 class="orbitron text-2xl md:text-3xl font-bold neon-text">🌟 Hero Kebaikan</h1>
                 <div class="flex flex-wrap gap-2 md:gap-4 text-xs md:text-sm">
                     <div class="bg-purple-900/50 px-2 md:px-3 py-1 rounded-full border border-purple-400/30">
@@ -861,8 +912,8 @@
     </main>
 
     <!-- Tutorial Modal -->
-    <div id="tutorialModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 md:p-4">
-        <div class="bg-gradient-to-br from-purple-900/90 to-indigo-900/90 backdrop-blur-md rounded-xl md:rounded-2xl border border-purple-400/30 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
+    <div id="tutorialModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-2 md:p-4">
+        <div class="modal-content bg-gradient-to-br from-purple-900/90 to-indigo-900/90 backdrop-blur-md rounded-xl md:rounded-2xl border border-purple-400/30 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
             <div class="p-3 md:p-6">
                 <div class="flex justify-between items-center mb-3 md:mb-6">
                     <h2 class="orbitron text-lg md:text-2xl font-bold neon-text">📖 Tutorial Hero Kebaikan</h2>
@@ -883,8 +934,8 @@
     </div>
 
     <!-- Game Info Modal -->
-    <div id="gameInfoModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gradient-to-br from-purple-900/90 to-indigo-900/90 backdrop-blur-md rounded-2xl border border-purple-400/30 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+    <div id="gameInfoModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-gradient-to-br from-purple-900/90 to-indigo-900/90 backdrop-blur-md rounded-2xl border border-purple-400/30 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="orbitron text-2xl font-bold neon-text">ℹ️ Tentang Game</h2>
@@ -988,8 +1039,8 @@
     </div>
 
     <!-- Achievements Modal -->
-    <div id="achievementsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gradient-to-br from-yellow-900/90 to-orange-900/90 backdrop-blur-md rounded-2xl border border-yellow-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div id="achievementsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-gradient-to-br from-yellow-900/90 to-orange-900/90 backdrop-blur-md rounded-2xl border border-yellow-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="orbitron text-2xl font-bold neon-text">🏆 Achievements</h2>
@@ -1004,8 +1055,8 @@
     </div>
 
     <!-- Collectibles Modal -->
-    <div id="collectiblesModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gradient-to-br from-purple-900/90 to-pink-900/90 backdrop-blur-md rounded-2xl border border-purple-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div id="collectiblesModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-gradient-to-br from-purple-900/90 to-pink-900/90 backdrop-blur-md rounded-2xl border border-purple-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="orbitron text-2xl font-bold neon-text">💎 Koleksi Item</h2>
@@ -1020,8 +1071,8 @@
     </div>
 
     <!-- Mini Game Modal -->
-    <div id="miniGameModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gradient-to-br from-cyan-900/90 to-teal-900/90 backdrop-blur-md rounded-2xl border border-cyan-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div id="miniGameModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-gradient-to-br from-cyan-900/90 to-teal-900/90 backdrop-blur-md rounded-2xl border border-cyan-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="orbitron text-2xl font-bold neon-text">🎯 Mini Game: Susun Kata</h2>
@@ -1036,8 +1087,8 @@
     </div>
 
     <!-- Bully Defender Modal -->
-    <div id="bullyDefenderModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gradient-to-br from-red-900/90 to-orange-900/90 backdrop-blur-md rounded-2xl border border-red-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div id="bullyDefenderModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-gradient-to-br from-red-900/90 to-orange-900/90 backdrop-blur-md rounded-2xl border border-red-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="orbitron text-2xl font-bold neon-text">🛡️ Bully Defender</h2>
@@ -1052,8 +1103,8 @@
     </div>
 
     <!-- Inventory Modal -->
-    <div id="inventoryModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gradient-to-br from-indigo-900/90 to-purple-900/90 backdrop-blur-md rounded-2xl border border-indigo-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div id="inventoryModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-gradient-to-br from-indigo-900/90 to-purple-900/90 backdrop-blur-md rounded-2xl border border-indigo-400/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="orbitron text-2xl font-bold neon-text">🎒 Inventory</h2>
@@ -5166,5 +5217,5 @@
             checkFirstTimePlayer();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96e84a4a507ace21',t:'MTc1NTA4ODkyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96e868b1f3543e02',t:'MTc1NTA5MDE2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
